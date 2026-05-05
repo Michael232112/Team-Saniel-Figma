@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Gymers;
 
@@ -11,8 +11,13 @@ public static class MauiProgram
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("Manrope-Bold.ttf",      "ManropeBold");
+				fonts.AddFont("Manrope-ExtraBold.ttf", "ManropeExtraBold");
+				fonts.AddFont("Manrope-SemiBold.ttf",  "ManropeSemiBold");
+				fonts.AddFont("Inter-Regular.ttf",     "InterRegular");
+				fonts.AddFont("Inter-Medium.ttf",      "InterMedium");
+				fonts.AddFont("Inter-SemiBold.ttf",    "InterSemiBold");
+				fonts.AddFont("Lucide.ttf",            "LucideIcons");
 			});
 
 #if DEBUG
