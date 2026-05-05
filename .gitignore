@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# .NET / MAUI build output
+**/bin/
+**/obj/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# Python venv (if used for tooling)
+venv/
+
+# Local proposal/status documents (keep out of repo)
+Gym-Management-System-Proposal.pdf
+Gymers-Mobile-App-Status-Update.docx
+pdf_content.txt
+
+# Figma binary (large)
+*.fig
