@@ -3,13 +3,21 @@
     x:Class="Gymers.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Gymers"
+    xmlns:pages="clr-namespace:Gymers.Pages"
     Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
+    FlyoutBehavior="Disabled"
     Title="Gymers">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellContent Title="Login"
+                  Route="Login"
+                  ContentTemplate="{DataTemplate pages:LoginPage}" />
+
+    <TabBar>
+        <ShellContent Route="Dashboard"  ContentTemplate="{DataTemplate pages:DashboardPage}" />
+        <ShellContent Route="Members"    ContentTemplate="{DataTemplate pages:MembersPage}" />
+        <ShellContent Route="Payments"   ContentTemplate="{DataTemplate pages:PaymentsPage}" />
+        <ShellContent Route="Attendance" ContentTemplate="{DataTemplate pages:AttendancePage}" />
+    </TabBar>
 
 </Shell>

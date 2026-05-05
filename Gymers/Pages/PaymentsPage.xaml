@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:Gymers.Controls"
+             x:Class="Gymers.Pages.PaymentsPage"
+             BackgroundColor="{StaticResource BgApp}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <c:TopAppBar Grid.Row="0" Title="Payments"
+                     TrailingIconGlyph="{x:Static c:Icons.Plus}" />
+
+        <ScrollView Grid.Row="1" Padding="24,16">
+            <VerticalStackLayout Spacing="16">
+
+                <c:KpiCard Variant="Dark"
+                           Label="Today's Earnings" Value="$1,250"
+                           DeltaText="+8%" DeltaDirection="Up"
+                           Caption="vs yesterday"
+                           TrailingIconGlyph="{x:Static c:Icons.DollarSign}" />
+
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Style="{StaticResource H3Card}" Text="Record Payment" />
+                        <c:LabeledInput Label="Member"  Placeholder="Member name" />
+                        <c:LabeledInput Label="Amount"  Placeholder="0.00" Keyboard="Numeric" />
+                        <c:LabeledInput Label="Method"  Placeholder="Card / Cash / Bank" />
+                        <c:PrimaryButton Text="RECORD PAYMENT" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Style="{StaticResource H2Section}" Text="Recent Payments" />
+
+                <VerticalStackLayout x:Name="PaymentList" Spacing="12" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <c:BottomTabBar Grid.Row="2" ActiveTab="Payments" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:Gymers.Controls"
+             x:Class="Gymers.Pages.DashboardPage"
+             BackgroundColor="{StaticResource BgApp}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <c:TopAppBar Grid.Row="0" Title="Dashboard"
+                     TrailingIconGlyph="{x:Static c:Icons.Bell}" />
+
+        <ScrollView Grid.Row="1" Padding="24,16,24,16">
+            <VerticalStackLayout Spacing="16">
+
+                <c:KpiCard Variant="Light"
+                           Label="Total Members" Value="1,250"
+                           DeltaText="+5%" DeltaDirection="Up"
+                           Caption="this month"
+                           TrailingIconGlyph="{x:Static c:Icons.Users}" />
+
+                <c:KpiCard Variant="Light"
+                           Label="Today's Attendance" Value="350"
+                           DeltaText="+12%" DeltaDirection="Up"
+                           Caption="vs yesterday"
+                           TrailingIconGlyph="{x:Static c:Icons.Calendar}" />
+
+                <c:KpiCard Variant="Dark"
+                           Label="Monthly Earnings" Value="$45,000"
+                           DeltaText="+8%" DeltaDirection="Up"
+                           Caption="projected growth"
+                           TrailingIconGlyph="{x:Static c:Icons.DollarSign}" />
+
+                <!-- Live Capacity card -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="32">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Style="{StaticResource H3Card}" Text="Live Capacity" />
+                                <Label Style="{StaticResource BodyMd}"
+                                       Text="Real-time gym floor occupancy" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="0" HorizontalOptions="End">
+                                <Label FontFamily="{StaticResource FontInterSemiBold}"
+                                       FontSize="30"
+                                       TextColor="{StaticResource NavyDeep}"
+                                       HorizontalTextAlignment="End"
+                                       Text="78%" />
+                                <Label Style="{StaticResource LabelZone}"
+                                       TextColor="{StaticResource Olive}"
+                                       HorizontalTextAlignment="End"
+                                       Text="Peak Hour" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Progress bar -->
+                        <Border BackgroundColor="{StaticResource SurfaceMuted}" StrokeThickness="0"
+                                HeightRequest="32">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="999" />
+                            </Border.StrokeShape>
+                            <Border Background="{StaticResource LiveCapacityGradientBrush}"
+                                    StrokeThickness="0"
+                                    HorizontalOptions="Start"
+                                    WidthRequest="240" HeightRequest="32">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="999" />
+                                </Border.StrokeShape>
+                            </Border>
+                        </Border>
+
+                        <!-- Zone grid -->
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                              ColumnSpacing="16" RowSpacing="16">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+                                <Label Style="{StaticResource LabelZone}" Text="Cardio Zone" />
+                                <Label Style="{StaticResource StatLg}" Text="92%" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                                <Label Style="{StaticResource LabelZone}" Text="Weight Room" />
+                                <Label Style="{StaticResource StatLg}" Text="65%" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0">
+                                <Label Style="{StaticResource LabelZone}" Text="Yoga Studio" />
+                                <Label Style="{StaticResource StatLg}" Text="40%" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+                                <Label Style="{StaticResource LabelZone}" Text="Pool Area" />
+                                <Label Style="{StaticResource StatLg}" Text="15%" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Coach Spotlight -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="24">
+                        <Border WidthRequest="80" HeightRequest="80"
+                                BackgroundColor="{StaticResource PaleBlue}"
+                                StrokeThickness="0" HorizontalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="24" />
+                            </Border.StrokeShape>
+                            <Label Text="MS"
+                                   FontFamily="{StaticResource FontManropeBold}"
+                                   FontSize="28"
+                                   TextColor="{StaticResource NavyHeading}"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center" />
+                        </Border>
+
+                        <VerticalStackLayout Spacing="0">
+                            <Label Style="{StaticResource H3Card}" Text="Marcus Sterling" />
+                            <Label FontFamily="{StaticResource FontInterSemiBold}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource NavyDeep}"
+                                   Text="Lead Performance Coach" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="16">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Style="{StaticResource BodyMd}" Text="Client Rating" />
+                                <Label Grid.Column="1"
+                                       FontFamily="{StaticResource FontInterSemiBold}"
+                                       FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       Text="4.9/5.0" />
+                            </Grid>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Style="{StaticResource BodyMd}" Text="Sessions Completed" />
+                                <Label Grid.Column="1"
+                                       FontFamily="{StaticResource FontInterSemiBold}"
+                                       FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       Text="142" />
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <c:PrimaryButton Text="VIEW PERFORMANCE PROFILE" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Today's Classes -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="32">
+                        <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Style="{StaticResource H2Section}" Text="Today's Classes" />
+                                <Label Style="{StaticResource BodyMd}"
+                                       Text="Schedule for the next 4 hours" />
+                            </VerticalStackLayout>
+                            <c:SecondaryButton Grid.Column="1" Text="View Schedule"
+                                               VerticalOptions="Center" />
+                        </Grid>
+
+                        <VerticalStackLayout x:Name="ClassList" Spacing="16" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <c:BottomTabBar Grid.Row="2" ActiveTab="Dashboard" />
+    </Grid>
+</ContentPage>
