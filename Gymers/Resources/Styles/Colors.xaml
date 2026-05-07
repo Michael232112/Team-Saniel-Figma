@@ -28,6 +28,9 @@
     <Color x:Key="TextSecondary">#444651</Color>
     <Color x:Key="TextMuted">#64748B</Color>
 
+    <!-- Status -->
+    <Color x:Key="Danger">#B91C1C</Color>
+
     <!-- Brushes for the few places that need them -->
     <SolidColorBrush x:Key="BgAppBrush" Color="{StaticResource BgApp}" />
     <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}" />

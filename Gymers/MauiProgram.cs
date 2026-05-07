@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Gymers.Data;
 
 namespace Gymers;
 
@@ -19,6 +20,14 @@ public static class MauiProgram
 				fonts.AddFont("Inter-SemiBold.ttf",    "InterSemiBold");
 				fonts.AddFont("Lucide.ttf",            "LucideIcons");
 			});
+
+		builder.Services.AddSingleton<DataStore>();
+
+		builder.Services.AddTransient<Pages.LoginPage>();
+		builder.Services.AddTransient<Pages.DashboardPage>();
+		builder.Services.AddTransient<Pages.MembersPage>();
+		builder.Services.AddTransient<Pages.PaymentsPage>();
+		builder.Services.AddTransient<Pages.AttendancePage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();
