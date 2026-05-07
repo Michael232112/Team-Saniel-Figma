@@ -1,3 +1,4 @@
+using System.Globalization;
 using Gymers.Controls;
 using Gymers.Data;
 using Gymers.Models;
@@ -7,21 +8,65 @@ namespace Gymers.Pages;
 
 public partial class PaymentsPage : ContentPage
 {
-    public PaymentsPage()
+    readonly DataStore _data;
+    IDispatcherTimer? _statusTimer;
+
+    public PaymentsPage(DataStore data)
     {
+        _data = data;
         InitializeComponent();
-        BuildPaymentList();
+        RecordButton.Clicked += OnRecord;
+        _data.Payments.CollectionChanged += (_, _) => Render();
+        Render();
     }
 
-    void BuildPaymentList()
+    void OnRecord(object? sender, EventArgs e)
     {
-        foreach (var p in SampleData.Payments)
+        var nameRaw   = MemberInput.Text?.Trim() ?? "";
+        var amountRaw = AmountInput.Text?.Trim() ?? "";
+        var methodRaw = MethodInput.Text?.Trim() ?? "";
+
+        var member = _data.FindMemberByName(nameRaw);
+        if (member is null)
+        { ShowError($"No member named \"{nameRaw}\". Try {SuggestNames()}."); return; }
+
+        if (!decimal.TryParse(amountRaw, NumberStyles.Number, CultureInfo.InvariantCulture, out var amount)
+            || amount <= 0
+            || decimal.Round(amount, 2) != amount)
+        { ShowError("Amount must be a positive number with up to 2 decimals."); return; }
+
+        var method = methodRaw.ToLowerInvariant() switch
         {
-            var member = SampleData.GetMember(p.MemberId);
+            "card" => "Card",
+            "cash" => "Cash",
+            "bank" => "Bank",
+            _      => null
+        };
+        if (method is null)
+        { ShowError("Method must be Card, Cash, or Bank."); return; }
+
+        var payment = _data.RecordPayment(member, amount, method);
+
+        MemberInput.Text = "";
+        AmountInput.Text = "";
+        MethodInput.Text = "";
+        ShowSuccess($"Recorded ${payment.Amount:0.00} · Receipt #{payment.ReceiptNumber}.");
+    }
+
+    string SuggestNames() =>
+        string.Join(", ", _data.Members.Take(3).Select(m => m.Name));
+
+    void Render()
+    {
+        PaymentList.Children.Clear();
+        foreach (var p in _data.Payments)
+        {
+            var member = _data.Members.FirstOrDefault(m => m.Id == p.MemberId);
+            var displayName = member?.Name ?? "Unknown member";
             PaymentList.Children.Add(new ListRow
             {
                 LeadingContent = MakeAmountPill(p.Amount),
-                Title          = member.Name,
+                Title          = displayName,
                 Subtitle       = $"${p.Amount:0.00} · {p.Method} · Receipt #{p.ReceiptNumber}"
             });
         }
@@ -48,5 +93,27 @@ public partial class PaymentsPage : ContentPage
                 VerticalTextAlignment = TextAlignment.Center
             }
         };
+    }
+
+    void ShowError(string text)
+    {
+        _statusTimer?.Stop();
+        StatusLabel.Text = text;
+        StatusLabel.TextColor = (Color)Application.Current!.Resources["Danger"];
+        StatusLabel.IsVisible = true;
+    }
+
+    void ShowSuccess(string text)
+    {
+        StatusLabel.Text = text;
+        StatusLabel.TextColor = (Color)Application.Current!.Resources["Olive"];
+        StatusLabel.IsVisible = true;
+
+        _statusTimer?.Stop();
+        _statusTimer = Dispatcher.CreateTimer();
+        _statusTimer.Interval = TimeSpan.FromSeconds(2.5);
+        _statusTimer.IsRepeating = false;
+        _statusTimer.Tick += (_, _) => StatusLabel.IsVisible = false;
+        _statusTimer.Start();
     }
 }

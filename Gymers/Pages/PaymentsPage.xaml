@@ -22,10 +22,14 @@
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="16">
                         <Label Style="{StaticResource H3Card}" Text="Record Payment" />
-                        <c:LabeledInput Label="Member"  Placeholder="Member name" />
-                        <c:LabeledInput Label="Amount"  Placeholder="0.00" Keyboard="Numeric" />
-                        <c:LabeledInput Label="Method"  Placeholder="Card / Cash / Bank" />
-                        <c:PrimaryButton Text="RECORD PAYMENT" />
+                        <c:LabeledInput x:Name="MemberInput" Label="Member"  Placeholder="Member name" />
+                        <c:LabeledInput x:Name="AmountInput" Label="Amount"  Placeholder="0.00" Keyboard="Numeric" />
+                        <c:LabeledInput x:Name="MethodInput" Label="Method"  Placeholder="Card / Cash / Bank" />
+                        <c:PrimaryButton x:Name="RecordButton" Text="RECORD PAYMENT" />
+                        <Label x:Name="StatusLabel"
+                               Style="{StaticResource BodySm}"
+                               HorizontalTextAlignment="Center"
+                               IsVisible="False" />
                     </VerticalStackLayout>
                 </Border>
 
