@@ -25,8 +25,8 @@
             <!-- Card with form -->
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="16">
-                    <c:LabeledInput Label="Username" Placeholder="admin" />
-                    <c:LabeledInput Label="Password" Placeholder="••••••••" IsPassword="True" />
+                    <c:LabeledInput x:Name="UsernameInput" Label="Username" Placeholder="admin" />
+                    <c:LabeledInput x:Name="PasswordInput" Label="Password" Placeholder="••••••••" IsPassword="True" />
 
                     <!-- Admin/Staff segment -->
                     <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
@@ -58,6 +58,12 @@
                         </Border>
                     </HorizontalStackLayout>
 
+                    <Label x:Name="ErrorLabel"
+                           Style="{StaticResource BodySm}"
+                           TextColor="{StaticResource Danger}"
+                           HorizontalTextAlignment="Center"
+                           IsVisible="False" />
+
                     <c:PrimaryButton Text="SIGN IN" Clicked="OnSignIn" />
                 </VerticalStackLayout>
             </Border>
@@ -65,7 +71,7 @@
             <Label Style="{StaticResource BodySm}"
                    TextColor="{StaticResource TextMuted}"
                    HorizontalTextAlignment="Center"
-                   Text="Demo: any username/password works" />
+                   Text="Demo: admin / admin123  ·  staff / staff123" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
