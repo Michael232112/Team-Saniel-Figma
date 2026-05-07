@@ -22,8 +22,13 @@
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="16">
                         <Label Style="{StaticResource H3Card}" Text="Check In" />
-                        <c:SearchField Placeholder="Search member by name…" />
-                        <c:PrimaryButton Text="CHECK IN" />
+                        <c:SearchField x:Name="MemberSearch" Placeholder="Search member by name…" />
+                        <VerticalStackLayout x:Name="Suggestions" Spacing="4" IsVisible="False" />
+                        <c:PrimaryButton x:Name="CheckInButton" Text="CHECK IN" />
+                        <Label x:Name="StatusLabel"
+                               Style="{StaticResource BodySm}"
+                               HorizontalTextAlignment="Center"
+                               IsVisible="False" />
                     </VerticalStackLayout>
                 </Border>
 
