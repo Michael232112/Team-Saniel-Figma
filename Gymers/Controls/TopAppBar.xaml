@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gymers.Controls.TopAppBar"
+             x:Name="ThisBar">
+    <Border BackgroundColor="{StaticResource Surface}"
+            StrokeThickness="0"
+            Padding="24,16">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16" VerticalOptions="Center">
+            <!-- Avatar -->
+            <Border Grid.Column="0" WidthRequest="40" HeightRequest="40"
+                    BackgroundColor="{StaticResource PaleBlue}" StrokeThickness="0"
+                    IsVisible="{Binding ShowAvatar, Source={x:Reference ThisBar}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="999" />
+                </Border.StrokeShape>
+                <Label Text="A"
+                       FontFamily="{StaticResource FontManropeBold}"
+                       FontSize="18"
+                       TextColor="{StaticResource NavyHeading}"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center" />
+            </Border>
+
+            <!-- Title -->
+            <Label Grid.Column="1"
+                   Style="{StaticResource H1Page}"
+                   VerticalTextAlignment="Center"
+                   BindingContext="{x:Reference ThisBar}"
+                   Text="{Binding Title}" />
+
+            <!-- Trailing icon -->
+            <Border Grid.Column="2" WidthRequest="40" HeightRequest="40"
+                    BackgroundColor="Transparent" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="999" />
+                </Border.StrokeShape>
+                <Label x:Name="TrailingGlyph"
+                       FontFamily="{StaticResource FontLucide}"
+                       FontSize="18"
+                       TextColor="{StaticResource TextPrimary}"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center" />
+            </Border>
+        </Grid>
+    </Border>
+</ContentView>

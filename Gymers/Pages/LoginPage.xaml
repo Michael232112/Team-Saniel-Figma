@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:Gymers.Controls"
+             x:Class="Gymers.Pages.LoginPage"
+             BackgroundColor="{StaticResource BgApp}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,80,24,40" Spacing="24">
+
+            <!-- Wordmark -->
+            <Label Text="GYMERS"
+                   FontFamily="{StaticResource FontManropeExtraBold}"
+                   FontSize="30"
+                   CharacterSpacing="2"
+                   TextColor="{StaticResource NavyHeading}"
+                   HorizontalTextAlignment="Center" />
+
+            <!-- Welcome -->
+            <VerticalStackLayout Spacing="4">
+                <Label Style="{StaticResource H1Page}" Text="Welcome back" />
+                <Label Style="{StaticResource BodyMd}" Text="Sign in to manage your gym" />
+            </VerticalStackLayout>
+
+            <!-- Card with form -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="16">
+                    <c:LabeledInput x:Name="UsernameInput" Label="Username" Placeholder="admin" />
+                    <c:LabeledInput x:Name="PasswordInput" Label="Password" Placeholder="••••••••" IsPassword="True" />
+
+                    <!-- Admin/Staff segment -->
+                    <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Border x:Name="AdminPill" StrokeThickness="0" Padding="20,8"
+                                BackgroundColor="{StaticResource NavyDeep}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="999" />
+                            </Border.StrokeShape>
+                            <Label x:Name="AdminLabel" Text="Admin"
+                                   FontFamily="{StaticResource FontInterSemiBold}"
+                                   FontSize="14"
+                                   TextColor="White" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSelectAdmin" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <Border x:Name="StaffPill" StrokeThickness="0" Padding="20,8"
+                                BackgroundColor="Transparent">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="999" />
+                            </Border.StrokeShape>
+                            <Label x:Name="StaffLabel" Text="Staff"
+                                   FontFamily="{StaticResource FontInterSemiBold}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource TextSecondary}" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSelectStaff" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </HorizontalStackLayout>
+
+                    <Label x:Name="ErrorLabel"
+                           Style="{StaticResource BodySm}"
+                           TextColor="{StaticResource Danger}"
+                           HorizontalTextAlignment="Center"
+                           IsVisible="False" />
+
+                    <c:PrimaryButton Text="SIGN IN" Clicked="OnSignIn" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Style="{StaticResource BodySm}"
+                   TextColor="{StaticResource TextMuted}"
+                   HorizontalTextAlignment="Center"
+                   Text="Demo: admin / admin123  ·  staff / staff123" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

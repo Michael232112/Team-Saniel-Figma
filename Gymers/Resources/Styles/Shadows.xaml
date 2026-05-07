@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Single elevation: 0 10 30 / #1A1C1C @ 6% -->
+    <Shadow x:Key="CardShadow"
+            Brush="{StaticResource TextPrimary}"
+            Offset="0,10"
+            Radius="30"
+            Opacity="0.06" />
+
+</ResourceDictionary>

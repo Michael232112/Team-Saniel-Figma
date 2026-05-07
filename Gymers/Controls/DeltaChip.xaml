@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:Gymers.Controls"
+             x:Class="Gymers.Controls.DeltaChip"
+             x:Name="ThisChip">
+    <Border x:Name="Pill" Style="{StaticResource Pill}" Padding="8,2"
+            HorizontalOptions="Start">
+        <HorizontalStackLayout Spacing="2" VerticalOptions="Center">
+            <Label x:Name="GlyphLabel"
+                   FontFamily="{StaticResource FontLucide}"
+                   FontSize="11"
+                   VerticalTextAlignment="Center" />
+            <Label x:Name="TextLabel"
+                   FontFamily="{StaticResource FontInterSemiBold}"
+                   FontSize="14"
+                   VerticalTextAlignment="Center"
+                   BindingContext="{x:Reference ThisChip}"
+                   Text="{Binding Text}" />
+        </HorizontalStackLayout>
+    </Border>
+</ContentView>

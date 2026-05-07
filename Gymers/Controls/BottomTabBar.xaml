@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:Gymers.Controls"
+             x:Class="Gymers.Controls.BottomTabBar"
+             x:Name="ThisBar">
+    <Border BackgroundColor="{StaticResource Surface}" StrokeThickness="0">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="24,24,0,0" />
+        </Border.StrokeShape>
+        <Grid ColumnDefinitions="*,*,*,*" Padding="16,12,16,32">
+            <!-- Dashboard -->
+            <Border x:Name="DashboardPill" Grid.Column="0" StrokeThickness="0" Padding="16,6">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="999" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label x:Name="DashboardGlyph" FontFamily="{StaticResource FontLucide}"
+                           FontSize="18" HorizontalTextAlignment="Center"
+                           Text="{x:Static c:Icons.Users}" />
+                    <Label x:Name="DashboardLabel" Style="{StaticResource LabelTab}"
+                           HorizontalTextAlignment="Center" Text="Dashboard" />
+                </VerticalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDashboardTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Members -->
+            <Border x:Name="MembersPill" Grid.Column="1" StrokeThickness="0" Padding="16,6">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="999" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label x:Name="MembersGlyph" FontFamily="{StaticResource FontLucide}"
+                           FontSize="18" HorizontalTextAlignment="Center"
+                           Text="{x:Static c:Icons.Users}" />
+                    <Label x:Name="MembersLabel" Style="{StaticResource LabelTab}"
+                           HorizontalTextAlignment="Center" Text="Members" />
+                </VerticalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMembersTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Payments -->
+            <Border x:Name="PaymentsPill" Grid.Column="2" StrokeThickness="0" Padding="16,6">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="999" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label x:Name="PaymentsGlyph" FontFamily="{StaticResource FontLucide}"
+                           FontSize="18" HorizontalTextAlignment="Center"
+                           Text="{x:Static c:Icons.DollarSign}" />
+                    <Label x:Name="PaymentsLabel" Style="{StaticResource LabelTab}"
+                           HorizontalTextAlignment="Center" Text="Payments" />
+                </VerticalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPaymentsTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Attendance -->
+            <Border x:Name="AttendancePill" Grid.Column="3" StrokeThickness="0" Padding="16,6">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="999" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label x:Name="AttendanceGlyph" FontFamily="{StaticResource FontLucide}"
+                           FontSize="18" HorizontalTextAlignment="Center"
+                           Text="{x:Static c:Icons.Calendar}" />
+                    <Label x:Name="AttendanceLabel" Style="{StaticResource LabelTab}"
+                           HorizontalTextAlignment="Center" Text="Attendance" />
+                </VerticalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAttendanceTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+    </Border>
+</ContentView>

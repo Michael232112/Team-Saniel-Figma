@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Font family aliases (declared in MauiProgram.cs) -->
+    <x:String x:Key="FontManropeBold">ManropeBold</x:String>
+    <x:String x:Key="FontManropeExtraBold">ManropeExtraBold</x:String>
+    <x:String x:Key="FontManropeSemiBold">ManropeSemiBold</x:String>
+    <x:String x:Key="FontInterRegular">InterRegular</x:String>
+    <x:String x:Key="FontInterMedium">InterMedium</x:String>
+    <x:String x:Key="FontInterSemiBold">InterSemiBold</x:String>
+    <x:String x:Key="FontLucide">LucideIcons</x:String>
+
+    <!-- Headings (Manrope) -->
+    <Style x:Key="DisplayKpi" TargetType="Label">
+        <Setter Property="FontFamily" Value="ManropeExtraBold" />
+        <Setter Property="FontSize" Value="48" />
+        <Setter Property="LineHeight" Value="1.0" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <Style x:Key="H1Page" TargetType="Label">
+        <Setter Property="FontFamily" Value="ManropeBold" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="LineHeight" Value="1.2" />
+        <Setter Property="CharacterSpacing" Value="-0.75" />
+        <Setter Property="TextColor" Value="{StaticResource NavyHeading}" />
+    </Style>
+
+    <Style x:Key="H2Section" TargetType="Label">
+        <Setter Property="FontFamily" Value="ManropeBold" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="LineHeight" Value="1.33" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <Style x:Key="H3Card" TargetType="Label">
+        <Setter Property="FontFamily" Value="ManropeBold" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="LineHeight" Value="1.4" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <Style x:Key="H4Item" TargetType="Label">
+        <Setter Property="FontFamily" Value="ManropeBold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="LineHeight" Value="1.5" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <Style x:Key="StatLg" TargetType="Label">
+        <Setter Property="FontFamily" Value="ManropeBold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="LineHeight" Value="1.55" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <!-- Body & UI (Inter) -->
+    <Style x:Key="BodyMd" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterRegular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.42" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+    </Style>
+
+    <Style x:Key="BodySm" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterRegular" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineHeight" Value="1.33" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+    </Style>
+
+    <Style x:Key="LabelKpi" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterSemiBold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineHeight" Value="1.33" />
+        <Setter Property="CharacterSpacing" Value="0.6" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+    </Style>
+
+    <Style x:Key="LabelZone" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterSemiBold" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="LineHeight" Value="1.5" />
+        <Setter Property="CharacterSpacing" Value="1.0" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+    </Style>
+
+    <Style x:Key="LabelTab" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterMedium" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="LineHeight" Value="1.5" />
+        <Setter Property="CharacterSpacing" Value="0.5" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+        <Setter Property="TextColor" Value="{StaticResource TextMuted}" />
+    </Style>
+
+    <Style x:Key="ButtonLg" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterSemiBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.42" />
+        <Setter Property="CharacterSpacing" Value="0.35" />
+        <Setter Property="TextColor" Value="{StaticResource PeriwinkleLight}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="Caption" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterMedium" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineHeight" Value="1.33" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+    </Style>
+
+</ResourceDictionary>

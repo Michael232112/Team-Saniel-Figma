@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:Gymers.Controls"
+             x:Class="Gymers.Controls.ListRow"
+             x:Name="ThisRow">
+    <Border BackgroundColor="{StaticResource SurfaceMuted}"
+            StrokeThickness="0" Padding="16">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="24" />
+        </Border.StrokeShape>
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16" VerticalOptions="Center">
+            <!-- Leading slot -->
+            <ContentPresenter Grid.Column="0"
+                              VerticalOptions="Center"
+                              BindingContext="{x:Reference ThisRow}"
+                              Content="{Binding LeadingContent}" />
+            <!-- Title + Subtitle -->
+            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                <Label Style="{StaticResource H4Item}"
+                       BindingContext="{x:Reference ThisRow}"
+                       Text="{Binding Title}" />
+                <Label Style="{StaticResource Caption}"
+                       BindingContext="{x:Reference ThisRow}"
+                       Text="{Binding Subtitle}" />
+            </VerticalStackLayout>
+            <!-- Trailing chevron -->
+            <Border Grid.Column="2" WidthRequest="32" HeightRequest="32"
+                    BackgroundColor="{StaticResource Lime}" StrokeThickness="0"
+                    BindingContext="{x:Reference ThisRow}"
+                    IsVisible="{Binding TrailingChevron}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="999" />
+                </Border.StrokeShape>
+                <Label FontFamily="{StaticResource FontLucide}"
+                       FontSize="14"
+                       TextColor="{StaticResource OliveDark}"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       Text="{x:Static c:Icons.ChevronRight}" />
+            </Border>
+        </Grid>
+    </Border>
+</ContentView>

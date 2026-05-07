@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:Gymers.Controls"
+             x:Class="Gymers.Pages.AttendancePage"
+             BackgroundColor="{StaticResource BgApp}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <c:TopAppBar Grid.Row="0" Title="Attendance"
+                     TrailingIconGlyph="{x:Static c:Icons.Calendar}" />
+
+        <ScrollView Grid.Row="1" Padding="24,16">
+            <VerticalStackLayout Spacing="16">
+
+                <c:KpiCard Variant="Light"
+                           Label="Today's Check-Ins" Value="350"
+                           DeltaText="+12%" DeltaDirection="Up"
+                           Caption="vs yesterday"
+                           TrailingIconGlyph="{x:Static c:Icons.Calendar}" />
+
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Style="{StaticResource H3Card}" Text="Check In" />
+                        <c:SearchField x:Name="MemberSearch" Placeholder="Search member by name…" />
+                        <VerticalStackLayout x:Name="Suggestions" Spacing="4" IsVisible="False" />
+                        <c:PrimaryButton x:Name="CheckInButton" Text="CHECK IN" />
+                        <Label x:Name="StatusLabel"
+                               Style="{StaticResource BodySm}"
+                               HorizontalTextAlignment="Center"
+                               IsVisible="False" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Style="{StaticResource H2Section}" Text="Recent Check-ins" />
+
+                <VerticalStackLayout x:Name="CheckInList" Spacing="12" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <c:BottomTabBar Grid.Row="2" ActiveTab="Attendance" />
+    </Grid>
+</ContentPage>
