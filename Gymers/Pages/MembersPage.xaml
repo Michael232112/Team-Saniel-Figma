@@ -13,7 +13,7 @@
 
         <ScrollView Grid.Row="1" Padding="24,16">
             <VerticalStackLayout Spacing="16">
-                <c:SearchField Placeholder="Search by name…" />
+                <c:SearchField x:Name="Search" Placeholder="Search by name…" />
 
                 <c:KpiCard Variant="Light"
                            Label="Active Members" Value="1,250"
