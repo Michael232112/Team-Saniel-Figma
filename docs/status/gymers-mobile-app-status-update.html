@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Gymers Mobile Application Project Status Update</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #18212f;
+      line-height: 1.45;
+      margin: 48px;
+    }
+    h1 {
+      color: #134e4a;
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+    h2 {
+      color: #0f766e;
+      font-size: 18px;
+      margin-top: 24px;
+      border-bottom: 1px solid #d0d5dd;
+      padding-bottom: 4px;
+    }
+    h3 {
+      color: #18212f;
+      font-size: 14px;
+      margin-top: 16px;
+      margin-bottom: 6px;
+    }
+    p, li, td, th {
+      font-size: 12px;
+    }
+    .meta {
+      color: #667085;
+      margin-top: 0;
+      margin-bottom: 18px;
+    }
+    .summary {
+      background: #ecfdf3;
+      border: 1px solid #a6f4c5;
+      padding: 12px 14px;
+      margin: 12px 0 18px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+    th {
+      background: #f2f4f7;
+      color: #18212f;
+      text-align: left;
+      border: 1px solid #d0d5dd;
+      padding: 8px;
+    }
+    td {
+      border: 1px solid #d0d5dd;
+      padding: 8px;
+      vertical-align: top;
+    }
+    .status-done {
+      color: #027a48;
+      font-weight: bold;
+    }
+    .status-work {
+      color: #b54708;
+      font-weight: bold;
+    }
+    .shot {
+      margin: 10px 0 18px;
+    }
+    .shot img {
+      max-width: 320px;
+      width: 100%;
+      border: 1px solid #d0d5dd;
+      border-radius: 8px;
+      display: block;
+    }
+    .shot .caption {
+      color: #475467;
+      font-size: 11px;
+      margin-top: 6px;
+    }
+    .note {
+      color: #667085;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gymers Mobile Application Project Status Update</h1>
+  <p class="meta">Team Fafa | Gym Management System | Status date: May 9, 2026</p>
+
+  <div class="summary">
+    <p><strong>Overall Status:</strong> The Gymers project is a working .NET MAUI iOS app with a Mac Catalyst secondary target for fast local verification. The five core screens for the demo workflow (Login, Dashboard, Members, Payments, Attendance) are implemented and connected to a single in-memory <code>DataStore</code>: Members search filters live, Payments validate inputs and insert into the store, and Attendance records check-ins from a search-pick member flow. Login enforces fixed admin/staff credentials per the selected role pill. The build succeeds with 0 warnings and 0 errors on both iOS and Mac Catalyst. Persistence (SQLite), receipt PDF generation, exportable reports, and the trainer/workout/equipment/reports modules from the original scope are deferred to the next iteration.</p>
+  </div>
+
+  <h2>Completed Features</h2>
+  <table>
+    <tr>
+      <th>Feature</th>
+      <th>Status</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>Project setup</td>
+      <td class="status-done">Completed</td>
+      <td>.NET MAUI app targeting <code>net10.0-ios</code>, with <code>net10.0-maccatalyst</code> added on 2026-05-09 as a secondary target for fast local verification. Build succeeds with 0 warnings and 0 errors on both targets.</td>
+    </tr>
+    <tr>
+      <td>Login screen</td>
+      <td class="status-done">Completed</td>
+      <td>Validates fixed admin/staff credentials per the selected role pill (<code>admin/admin123</code>, <code>staff/staff123</code>). An inline error label surfaces empty-field and bad-credential states; correct credentials route to the Dashboard.</td>
+    </tr>
+    <tr>
+      <td>Admin dashboard</td>
+      <td class="status-done">Completed</td>
+      <td>KPI cards for Total Members, Today's Attendance, and Monthly Earnings (sample figures) plus a Live Capacity card with zone breakdown, a Coach Spotlight card, and a Today's Classes list rendered from sample class sessions.</td>
+    </tr>
+    <tr>
+      <td>Member management</td>
+      <td class="status-done">Completed</td>
+      <td>Live name-search filter over the in-memory member list with a muted empty-state notice when no matches are found. Search results re-render imperatively as the user types.</td>
+    </tr>
+    <tr>
+      <td>Payment processing</td>
+      <td class="status-done">Completed</td>
+      <td>Form validates Member name (must match an existing member), Amount (positive number with up to 2 decimals), and Method (Card / Cash / Bank, case-insensitive). Recorded payments insert into the store and appear at the top of <em>Recent Payments</em>. A status label flips between error (red) and success (green) states.</td>
+    </tr>
+    <tr>
+      <td>Attendance monitoring</td>
+      <td class="status-done">Completed</td>
+      <td>Search field surfaces up to 3 member suggestions, or auto-selects on an exact name match. <em>CHECK IN</em> inserts a check-in into the store; the <em>Recent Check-ins</em> list updates with the new row at the top. An empty store renders a muted fallback notice.</td>
+    </tr>
+    <tr>
+      <td>In-memory data layer</td>
+      <td class="status-done">Completed</td>
+      <td><code>DataStore</code> singleton exposes <code>ObservableCollection</code> of Members, Payments, and CheckIns, seeded from <code>SampleData</code>. Pages subscribe to <code>CollectionChanged</code> and re-render. Registered as a DI singleton; pages are transient.</td>
+    </tr>
+  </table>
+
+  <h2>Ongoing Tasks</h2>
+  <ul>
+    <li><strong>SQLite database integration:</strong> the in-memory <code>DataStore</code> needs to be replaced with persistent SQLite tables so records survive app restarts.</li>
+    <li><strong>Receipt PDF generation:</strong> payments now record correctly into the store; automatic PDF receipt creation is still pending.</li>
+    <li><strong>Reports export:</strong> KPI and attendance data are visible in the app, but a dedicated Reports screen with export/download is not yet implemented.</li>
+    <li><strong>Trainer / Workout Plan / Equipment / Reports modules:</strong> designed in the project scope but UI and data model are not yet implemented in this iteration.</li>
+    <li><strong>Testing and polish:</strong> the build is clean and the demo workflow has been manually verified end-to-end on Mac Catalyst, but broader test coverage and visual polish remain.</li>
+  </ul>
+
+  <h2>Challenges Encountered</h2>
+  <ul>
+    <li><strong>Time constraint:</strong> the original scope spans many modules, so this iteration prioritizes a fully working demo of the five core screens over breadth.</li>
+    <li><strong>Tooling setup:</strong> configuring .NET MAUI 10 with Xcode 26.2 for both the iOS simulator and Mac Catalyst targets required matching workload and platform versions.</li>
+    <li><strong>Scope management:</strong> validation and data flow were prioritized over the trainer/workout/equipment/reports modules, which were intentionally deferred to a later iteration.</li>
+    <li><strong>Data layer:</strong> shipped with an in-memory <code>DataStore</code> singleton (<code>ObservableCollection</code>s seeded from <code>SampleData</code>) so the demo has live, reactive lists. SQLite persistence is the next data-layer iteration.</li>
+  </ul>
+
+  <h2>Screenshots</h2>
+  <p>All screenshots below live in <code>docs/status/screenshots/</code>.</p>
+
+  <h3>Screenshot 1: Login Screen</h3>
+  <div class="shot">
+    <img src="screenshots/01-login.png" alt="Login screen">
+    <div class="caption">Login screen with the Gymers title, demo credentials caption, role pills, and sign-in form.</div>
+  </div>
+
+  <h3>Screenshot 2: Admin Dashboard</h3>
+  <div class="shot">
+    <img src="screenshots/02-dashboard.png" alt="Admin dashboard">
+    <div class="caption">Dashboard after signing in as Admin, including KPI cards and the Live Capacity / Coach Spotlight / Today's Classes blocks.</div>
+  </div>
+
+  <h3>Screenshot 3: Member Management</h3>
+  <div class="shot">
+    <img src="screenshots/03-members.png" alt="Members screen">
+    <div class="caption">Members screen with the search field and the live-filtered member list.</div>
+  </div>
+
+  <h3>Screenshot 4: Payment Processing</h3>
+  <div class="shot">
+    <img src="screenshots/04-payments.png" alt="Payments screen">
+    <div class="caption">Payments screen with the Record Payment form and the Recent Payments list.</div>
+  </div>
+
+  <h3>Screenshot 5: Attendance Monitoring</h3>
+  <div class="shot">
+    <img src="screenshots/05-attendance.png" alt="Attendance screen">
+    <div class="caption">Attendance screen with the Check In card and the Recent Check-ins list.</div>
+  </div>
+
+  <h3>Screenshot 6: Login Error State</h3>
+  <div class="shot">
+    <img src="screenshots/v2-login-error.png" alt="Login error state">
+    <div class="caption">Login screen with the inline validation error visible after pressing Sign In with empty or wrong credentials.</div>
+  </div>
+
+  <h2>Build Verification</h2>
+  <table>
+    <tr>
+      <th>Command</th>
+      <th>Result</th>
+    </tr>
+    <tr>
+      <td><code>dotnet build Gymers/Gymers.csproj -f net10.0-ios -c Debug</code></td>
+      <td>Build succeeded with 0 warnings and 0 errors.</td>
+    </tr>
+    <tr>
+      <td><code>dotnet build Gymers/Gymers.csproj -f net10.0-maccatalyst -c Debug</code></td>
+      <td>Build succeeded with 0 warnings and 0 errors.</td>
+    </tr>
+  </table>
+
+  <p class="note">Note: This document is prepared as a progress update for evaluation. Drop the referenced PNGs into the placeholder areas of the <code>.docx</code> before final submission if the evaluator requires images embedded directly in the Word file.</p>
+</body>
+</html>
