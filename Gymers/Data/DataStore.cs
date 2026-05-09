@@ -49,11 +49,12 @@ public sealed class DataStore
         return p;
     }
 
-    public CheckIn RecordCheckIn(Member m)
+    public async Task<CheckIn> RecordCheckInAsync(Member m)
     {
         int nextId = CheckIns.Count == 0 ? 1 : CheckIns.Max(c => c.Id) + 1;
         var c = new CheckIn(nextId, m.Id, DateTime.Now);
-        CheckIns.Insert(0, c);
+        await _db.InsertCheckInAsync(c);
+        await MainThread.InvokeOnMainThreadAsync(() => CheckIns.Insert(0, c));
         return c;
     }
 }

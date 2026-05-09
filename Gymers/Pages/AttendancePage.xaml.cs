@@ -77,11 +77,11 @@ public partial class AttendancePage : ContentPage
         return border;
     }
 
-    void OnCheckIn(object? sender, EventArgs e)
+    async void OnCheckIn(object? sender, EventArgs e)
     {
         if (_selected is null) { ShowError("Select a member first."); return; }
         var member = _selected;
-        var c = _data.RecordCheckIn(member);
+        var c = await _data.RecordCheckInAsync(member);
         _selected = null;
         MemberSearch.Text = "";
         Suggestions.IsVisible = false;
