@@ -139,11 +139,15 @@
       <td class="status-done">Completed</td>
       <td><code>DataStore</code> singleton exposes <code>ObservableCollection</code> of Members, Payments, and CheckIns, seeded from <code>SampleData</code>. Pages subscribe to <code>CollectionChanged</code> and re-render. Registered as a DI singleton; pages are transient.</td>
     </tr>
+    <tr>
+      <td>SQLite persistence</td>
+      <td class="status-done">Completed</td>
+      <td><code>DataStore</code> is now SQLite-backed via <code>sqlite-net-pcl</code>. Members, payments, and check-ins persist across app restart in <code>gymers.db3</code> under <code>FileSystem.AppDataDirectory</code>. Bootstrap seeds from <code>SampleData</code> on first run; runtime mutations write through <code>SQLiteAsyncConnection</code>.</td>
+    </tr>
   </table>
 
   <h2>Ongoing Tasks</h2>
   <ul>
-    <li><strong>SQLite database integration:</strong> the in-memory <code>DataStore</code> needs to be replaced with persistent SQLite tables so records survive app restarts.</li>
     <li><strong>Receipt PDF generation:</strong> payments now record correctly into the store; automatic PDF receipt creation is still pending.</li>
     <li><strong>Reports export:</strong> KPI and attendance data are visible in the app, but a dedicated Reports screen with export/download is not yet implemented.</li>
     <li><strong>Trainer / Workout Plan / Equipment / Reports modules:</strong> designed in the project scope but UI and data model are not yet implemented in this iteration.</li>

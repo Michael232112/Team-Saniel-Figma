@@ -99,6 +99,9 @@ def document_xml() -> str:
         ["In-memory data layer",
          "Completed",
          "DataStore singleton exposes ObservableCollection of Members, Payments, and CheckIns, seeded from SampleData. Pages subscribe to CollectionChanged and re-render. Registered as a DI singleton; pages are transient."],
+        ["SQLite persistence",
+         "Completed",
+         "DataStore is now SQLite-backed via sqlite-net-pcl. Members, payments, and check-ins persist across app restart in gymers.db3 under FileSystem.AppDataDirectory. Bootstrap seeds from SampleData on first run; runtime mutations write through SQLiteAsyncConnection."],
     ]
 
     parts = [
@@ -109,7 +112,6 @@ def document_xml() -> str:
         p("Completed Features", "Heading1"),
         table(["Feature", "Status", "Description"], completed_rows),
         p("Ongoing Tasks", "Heading1"),
-        bullet("SQLite database integration: the in-memory DataStore needs to be replaced with persistent SQLite tables so records survive app restarts."),
         bullet("Receipt PDF generation: payments now record correctly into the store; automatic PDF receipt creation is still pending."),
         bullet("Reports export: KPI and attendance data are visible in the app, but a dedicated Reports screen with export/download is not yet implemented."),
         bullet("Trainer, Workout Plan, Equipment, and Reports modules: designed in the project scope but UI and data model are not yet implemented in this iteration."),
