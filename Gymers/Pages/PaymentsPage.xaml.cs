@@ -20,7 +20,7 @@ public partial class PaymentsPage : ContentPage
         Render();
     }
 
-    void OnRecord(object? sender, EventArgs e)
+    async void OnRecord(object? sender, EventArgs e)
     {
         var nameRaw   = MemberInput.Text?.Trim() ?? "";
         var amountRaw = AmountInput.Text?.Trim() ?? "";
@@ -45,7 +45,7 @@ public partial class PaymentsPage : ContentPage
         if (method is null)
         { ShowError("Method must be Card, Cash, or Bank."); return; }
 
-        var payment = _data.RecordPayment(member, amount, method);
+        var payment = await _data.RecordPaymentAsync(member, amount, method);
 
         MemberInput.Text = "";
         AmountInput.Text = "";

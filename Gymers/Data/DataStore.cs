@@ -39,12 +39,13 @@ public sealed class DataStore
             : Members.Where(m =>
                 m.Name.Contains(query.Trim(), StringComparison.OrdinalIgnoreCase));
 
-    public Payment RecordPayment(Member m, decimal amount, string method)
+    public async Task<Payment> RecordPaymentAsync(Member m, decimal amount, string method)
     {
         int nextId      = Payments.Count == 0 ? 1043 : Payments.Max(p => p.Id) + 1;
         int nextReceipt = Payments.Count == 0 ? 1043 : Payments.Max(p => p.ReceiptNumber) + 1;
         var p = new Payment(nextId, m.Id, amount, method, nextReceipt, DateTime.Now);
-        Payments.Insert(0, p);
+        await _db.InsertPaymentAsync(p);
+        await MainThread.InvokeOnMainThreadAsync(() => Payments.Insert(0, p));
         return p;
     }
 
