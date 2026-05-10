@@ -503,7 +503,16 @@ dotnet build Gymers/Gymers.csproj -f net10.0-maccatalyst -c Debug
 dotnet build Gymers/Gymers.csproj -f net10.0-ios -c Debug
 ```
 
-Expected: `0 Warning(s) 0 Error(s)` on both. (If the build complains about `QuestPDF.Helpers.Colors` ambiguity with `Microsoft.Maui.Graphics.Colors`, the `using QuestPDF.Helpers;` line scopes correctly — the conflict only arises if you also `using Microsoft.Maui.Graphics;` in this file, which we don't.)
+Expected: 0 errors on both (warnings will still be ~19 from QuestPDF's bundled font assets — that's fine).
+
+Caveat — observed during the Task 3 implementation pass: with `<ImplicitUsings>enable</ImplicitUsings>` in `Gymers.csproj`, MAUI's workload globally injects `Microsoft.Maui.Graphics.Colors` and `Microsoft.Maui.IContainer`, causing CS0104 ambiguity against the QuestPDF counterparts even without an explicit `using Microsoft.Maui.Graphics;` in this file. Fix is two file-scoped using aliases at the top of `ReceiptDocument.cs`:
+
+```csharp
+using IContainer = QuestPDF.Infrastructure.IContainer;
+using Colors = QuestPDF.Helpers.Colors;
+```
+
+These are the minimal correct fix — file-scoped, no side-effects, no global usings file edit.
 
 - [ ] **Step 4: Smoke-test the app**
 
