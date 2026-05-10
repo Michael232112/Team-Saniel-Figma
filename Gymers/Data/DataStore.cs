@@ -11,6 +11,7 @@ public sealed class DataStore
     public ObservableCollection<Member>  Members  { get; }
     public ObservableCollection<Payment> Payments { get; }
     public ObservableCollection<CheckIn> CheckIns { get; }
+    public ObservableCollection<Trainer> Trainers { get; }
 
     public DataStore()
     {
@@ -24,9 +25,15 @@ public sealed class DataStore
             _db.SeedCheckIns(SampleData.CheckIns);
         }
 
+        if (_db.IsTrainersEmpty())
+        {
+            _db.SeedTrainers(SampleData.Trainers);
+        }
+
         Members  = new ObservableCollection<Member>(_db.GetMembers());
         Payments = new ObservableCollection<Payment>(_db.GetPaymentsNewestFirst());
         CheckIns = new ObservableCollection<CheckIn>(_db.GetCheckInsNewestFirst());
+        Trainers = new ObservableCollection<Trainer>(_db.GetTrainersByRatingDesc());
     }
 
     public Member? FindMemberByName(string? name) =>
@@ -38,6 +45,14 @@ public sealed class DataStore
             ? Members
             : Members.Where(m =>
                 m.Name.Contains(query.Trim(), StringComparison.OrdinalIgnoreCase));
+
+    public IEnumerable<Trainer> SearchTrainers(string? query) =>
+        string.IsNullOrWhiteSpace(query)
+            ? Trainers
+            : Trainers.Where(t =>
+                t.Name.Contains(query.Trim(), StringComparison.OrdinalIgnoreCase));
+
+    public Trainer? TopTrainer() => Trainers.FirstOrDefault();
 
     public async Task<Payment> RecordPaymentAsync(Member m, decimal amount, string method)
     {
