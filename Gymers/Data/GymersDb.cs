@@ -18,6 +18,7 @@ public sealed class GymersDb
         _sync.CreateTable<MemberRow>();
         _sync.CreateTable<PaymentRow>();
         _sync.CreateTable<CheckInRow>();
+        _sync.CreateTable<TrainerRow>();
     }
 
     public SQLiteAsyncConnection Async => _async ??= new SQLiteAsyncConnection(_path);
@@ -53,6 +54,21 @@ public sealed class GymersDb
         _sync.Table<CheckInRow>()
              .OrderByDescending(r => r.AtTicks)
              .ToList()
+             .Select(ToRecord);
+
+    public bool IsTrainersEmpty() =>
+        _sync.Table<TrainerRow>().Count() == 0;
+
+    public void SeedTrainers(IEnumerable<Trainer> trainers)
+    {
+        foreach (var t in trainers) _sync.Insert(ToRow(t));
+    }
+
+    public IEnumerable<Trainer> GetTrainersByRatingDesc() =>
+        _sync.Table<TrainerRow>()
+             .ToList()
+             .OrderByDescending(r => decimal.Parse(r.RatingText, CultureInfo.InvariantCulture))
+             .ThenByDescending(r => r.SessionsCompleted)
              .Select(ToRecord);
 
     public Task InsertPaymentAsync(Payment p) => Async.InsertAsync(ToRow(p));
@@ -98,4 +114,20 @@ public sealed class GymersDb
 
     static CheckIn ToRecord(CheckInRow r) => new(
         r.Id, r.MemberId, new DateTime(r.AtTicks));
+
+    static TrainerRow ToRow(Trainer t) => new()
+    {
+        Id                = t.Id,
+        Name              = t.Name,
+        Title             = t.Title,
+        RatingText        = t.Rating.ToString(CultureInfo.InvariantCulture),
+        SessionsCompleted = t.SessionsCompleted
+    };
+
+    static Trainer ToRecord(TrainerRow r) => new(
+        r.Id,
+        r.Name,
+        r.Title,
+        decimal.Parse(r.RatingText, CultureInfo.InvariantCulture),
+        r.SessionsCompleted);
 }
