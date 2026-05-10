@@ -34,7 +34,7 @@ Out of scope:
 
 ## 2. Library and triggering
 
-### Library: **QuestPDF (Community license)**
+### Library: **QuestPDF 2026.5.0 (Community license)**
 
 - Fluent C# layout API, no XSLT/HTML detour.
 - Pure managed; works on iOS + Mac Catalyst with zero native deps.
@@ -132,7 +132,7 @@ QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 | File | Action |
 | ---- | ------ |
-| `Gymers/Gymers.csproj` | Modify — add `<PackageReference Include="QuestPDF" Version="2024.12.0" />` |
+| `Gymers/Gymers.csproj` | Modify — add `<PackageReference Include="QuestPDF" Version="2026.5.0" />` |
 | `Gymers/MauiProgram.cs` | Modify — set Community license, register `ReceiptService` |
 | `Gymers/Services/ReceiptService.cs` | Create |
 | `Gymers/Services/ReceiptDocument.cs` | Create |
