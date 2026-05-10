@@ -2,6 +2,8 @@ using System.Globalization;
 using Gymers.Controls;
 using Gymers.Data;
 using Gymers.Models;
+using Gymers.Services;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace Gymers.Pages;
@@ -9,11 +11,13 @@ namespace Gymers.Pages;
 public partial class PaymentsPage : ContentPage
 {
     readonly DataStore _data;
+    readonly ReceiptService _receipts;
     IDispatcherTimer? _statusTimer;
 
-    public PaymentsPage(DataStore data)
+    public PaymentsPage(DataStore data, ReceiptService receipts)
     {
-        _data = data;
+        _data     = data;
+        _receipts = receipts;
         InitializeComponent();
         RecordButton.Clicked += OnRecord;
         _data.Payments.CollectionChanged += (_, _) => Render();
@@ -53,6 +57,27 @@ public partial class PaymentsPage : ContentPage
         ShowSuccess($"Recorded ${payment.Amount:0.00} · Receipt #{payment.ReceiptNumber}.");
     }
 
+    async void OnRowTapped(object? sender, EventArgs e)
+    {
+        if (sender is not ListRow row || row.CommandParameter is not Payment payment)
+            return;
+
+        try
+        {
+            var member = _data.Members.FirstOrDefault(m => m.Id == payment.MemberId);
+            var path   = await _receipts.GenerateAsync(payment, member);
+            await Share.Default.RequestAsync(new ShareFileRequest
+            {
+                Title = $"Gymers Receipt #{payment.ReceiptNumber}",
+                File  = new ShareFile(path)
+            });
+        }
+        catch (Exception ex)
+        {
+            ShowError($"Couldn't generate receipt: {ex.Message}");
+        }
+    }
+
     string SuggestNames() =>
         string.Join(", ", _data.Members.Take(3).Select(m => m.Name));
 
@@ -63,12 +88,16 @@ public partial class PaymentsPage : ContentPage
         {
             var member = _data.Members.FirstOrDefault(m => m.Id == p.MemberId);
             var displayName = member?.Name ?? "Unknown member";
-            PaymentList.Children.Add(new ListRow
+            var row = new ListRow
             {
-                LeadingContent = MakeAmountPill(p.Amount),
-                Title          = displayName,
-                Subtitle       = $"${p.Amount:0.00} · {p.Method} · Receipt #{p.ReceiptNumber}"
-            });
+                LeadingContent   = MakeAmountPill(p.Amount),
+                Title            = displayName,
+                Subtitle         = $"${p.Amount:0.00} · {p.Method} · Receipt #{p.ReceiptNumber}",
+                TrailingChevron  = true,
+                CommandParameter = p
+            };
+            row.Tapped += OnRowTapped;
+            PaymentList.Children.Add(row);
         }
     }
 
