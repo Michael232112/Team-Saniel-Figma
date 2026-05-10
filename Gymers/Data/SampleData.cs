@@ -43,6 +43,15 @@ public static class SampleData
             new DateTime(2026, 5, 5, 13, 30, 0), new DateTime(2026, 5, 5, 15, 00, 0)),
     };
 
+    public static readonly IReadOnlyList<Trainer> Trainers = new[]
+    {
+        new Trainer("t1", "Marcus Sterling", "Lead Performance Coach", 4.9m, 142),
+        new Trainer("t2", "Sienna Vega",     "HIIT Specialist",        4.8m, 118),
+        new Trainer("t3", "Rohan Iyer",      "Strength Coach",         4.7m,  96),
+        new Trainer("t4", "Maya Okafor",     "Yoga Instructor",        4.7m,  88),
+        new Trainer("t5", "Caleb Whit",      "Mobility Coach",         4.5m,  64),
+    };
+
     public static Member GetMember(string id) =>
         Members.First(m => m.Id == id);
 }
