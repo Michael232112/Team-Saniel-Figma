@@ -71,7 +71,7 @@ find ~/Library/Containers -path "*/receipts/gymers-receipt-*.pdf" -delete 2>/dev
 
 ## Task 1: Foundation — NuGet package and license
 
-After this task the project compiles with `QuestPDF` 2026.5.0 available, the Community license is set at startup, and a placeholder DI registration for `ReceiptService` is wired in. The service class itself is added later — for now this task only proves the package restores cleanly. No runtime behavior change yet.
+After this task the project compiles with `QuestPDF` 2026.5.0 available and the Community license is set at startup. DI registration for `ReceiptService` lands in Task 4 once the service class exists; this task only proves the package restores cleanly. No runtime behavior change yet.
 
 **Files:**
 - Modify: `Gymers/Gymers.csproj`
