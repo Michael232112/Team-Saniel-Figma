@@ -1,6 +1,6 @@
 namespace Gymers.Controls;
 
-public enum AppTab { Dashboard, Members, Payments, Attendance, Reports }
+public enum AppTab { Dashboard, Members, Payments, Attendance, Reports, Trainers }
 
 public partial class BottomTabBar : ContentView
 {
