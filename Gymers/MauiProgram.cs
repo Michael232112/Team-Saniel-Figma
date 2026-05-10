@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Gymers.Data;
 using Gymers.Services;
-using QuestPDF.Infrastructure;
 
 namespace Gymers;
 
@@ -10,8 +9,6 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
-
-		QuestPDF.Settings.License = LicenseType.Community;
 
 		builder
 			.UseMauiApp<App>()
