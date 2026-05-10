@@ -1,6 +1,6 @@
 namespace Gymers.Controls;
 
-public enum AppTab { Dashboard, Members, Payments, Attendance }
+public enum AppTab { Dashboard, Members, Payments, Attendance, Reports }
 
 public partial class BottomTabBar : ContentView
 {
@@ -30,15 +30,18 @@ public partial class BottomTabBar : ContentView
         MembersPill.BackgroundColor    = ActiveTab == AppTab.Members    ? pale : Colors.Transparent;
         PaymentsPill.BackgroundColor   = ActiveTab == AppTab.Payments   ? pale : Colors.Transparent;
         AttendancePill.BackgroundColor = ActiveTab == AppTab.Attendance ? pale : Colors.Transparent;
+        ReportsPill.BackgroundColor    = ActiveTab == AppTab.Reports    ? pale : Colors.Transparent;
 
         DashboardGlyph.TextColor  = DashboardLabel.TextColor  = ActiveTab == AppTab.Dashboard  ? navyHeading : muted;
         MembersGlyph.TextColor    = MembersLabel.TextColor    = ActiveTab == AppTab.Members    ? navyHeading : muted;
         PaymentsGlyph.TextColor   = PaymentsLabel.TextColor   = ActiveTab == AppTab.Payments   ? navyHeading : muted;
         AttendanceGlyph.TextColor = AttendanceLabel.TextColor = ActiveTab == AppTab.Attendance ? navyHeading : muted;
+        ReportsGlyph.TextColor    = ReportsLabel.TextColor    = ActiveTab == AppTab.Reports    ? navyHeading : muted;
     }
 
     async void OnDashboardTapped(object? sender, TappedEventArgs e)  => await Shell.Current.GoToAsync("//Dashboard");
     async void OnMembersTapped(object? sender, TappedEventArgs e)    => await Shell.Current.GoToAsync("//Members");
     async void OnPaymentsTapped(object? sender, TappedEventArgs e)   => await Shell.Current.GoToAsync("//Payments");
     async void OnAttendanceTapped(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//Attendance");
+    async void OnReportsTapped(object? sender, TappedEventArgs e)    => await Shell.Current.GoToAsync("//Reports");
 }

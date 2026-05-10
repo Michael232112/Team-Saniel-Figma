@@ -18,6 +18,7 @@
         <ShellContent Route="Members"    ContentTemplate="{DataTemplate pages:MembersPage}" />
         <ShellContent Route="Payments"   ContentTemplate="{DataTemplate pages:PaymentsPage}" />
         <ShellContent Route="Attendance" ContentTemplate="{DataTemplate pages:AttendancePage}" />
+        <ShellContent Route="Reports"    ContentTemplate="{DataTemplate pages:ReportsPage}" />
     </TabBar>
 
 </Shell>

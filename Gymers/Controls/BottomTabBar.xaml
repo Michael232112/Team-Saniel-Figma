@@ -8,7 +8,7 @@
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="24,24,0,0" />
         </Border.StrokeShape>
-        <Grid ColumnDefinitions="*,*,*,*" Padding="16,12,16,32">
+        <Grid ColumnDefinitions="*,*,*,*,*" Padding="16,12,16,32">
             <!-- Dashboard -->
             <Border x:Name="DashboardPill" Grid.Column="0" StrokeThickness="0" Padding="16,6">
                 <Border.StrokeShape>
@@ -74,6 +74,23 @@
                 </VerticalStackLayout>
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnAttendanceTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Reports -->
+            <Border x:Name="ReportsPill" Grid.Column="4" StrokeThickness="0" Padding="16,6">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="999" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label x:Name="ReportsGlyph" FontFamily="{StaticResource FontLucide}"
+                           FontSize="18" HorizontalTextAlignment="Center"
+                           Text="{x:Static c:Icons.Bell}" />
+                    <Label x:Name="ReportsLabel" Style="{StaticResource LabelTab}"
+                           HorizontalTextAlignment="Center" Text="Reports" />
+                </VerticalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnReportsTapped" />
                 </Border.GestureRecognizers>
             </Border>
         </Grid>

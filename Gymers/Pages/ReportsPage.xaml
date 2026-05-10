@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:Gymers.Controls"
+             x:Class="Gymers.Pages.ReportsPage"
+             BackgroundColor="{StaticResource BgApp}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <c:TopAppBar Grid.Row="0" Title="Reports"
+                     TrailingIconGlyph="{x:Static c:Icons.Bell}" />
+
+        <ScrollView Grid.Row="1" Padding="24,16">
+            <VerticalStackLayout Spacing="16">
+
+                <Label Style="{StaticResource H2Section}" Text="Period" />
+
+                <HorizontalStackLayout Spacing="8">
+                    <Button x:Name="WeekButton"  Text="Week"  WidthRequest="88" />
+                    <Button x:Name="MonthButton" Text="Month" WidthRequest="88" />
+                    <Button x:Name="AllButton"   Text="All"   WidthRequest="88" />
+                </HorizontalStackLayout>
+
+                <Label Style="{StaticResource H2Section}" Text="Reports" />
+
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Style="{StaticResource H3Card}" Text="Revenue" />
+                        <Label x:Name="RevenueSummary"
+                               Style="{StaticResource Caption}"
+                               Text="—" />
+                        <HorizontalStackLayout Spacing="8">
+                            <Button x:Name="RevenuePdfButton" Text="Share PDF"
+                                    BackgroundColor="{StaticResource NavyDeep}"
+                                    TextColor="White" />
+                            <Button x:Name="RevenueCsvButton" Text="Share CSV"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource NavyDeep}"
+                                    BorderColor="{StaticResource NavyDeep}"
+                                    BorderWidth="1" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Style="{StaticResource H3Card}" Text="Attendance" />
+                        <Label x:Name="AttendanceSummary"
+                               Style="{StaticResource Caption}"
+                               Text="—" />
+                        <HorizontalStackLayout Spacing="8">
+                            <Button x:Name="AttendancePdfButton" Text="Share PDF"
+                                    BackgroundColor="{StaticResource NavyDeep}"
+                                    TextColor="White" />
+                            <Button x:Name="AttendanceCsvButton" Text="Share CSV"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource NavyDeep}"
+                                    BorderColor="{StaticResource NavyDeep}"
+                                    BorderWidth="1" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Style="{StaticResource H3Card}" Text="Member Roster" />
+                        <Label x:Name="RosterSummary"
+                               Style="{StaticResource Caption}"
+                               Text="—" />
+                        <HorizontalStackLayout Spacing="8">
+                            <Button x:Name="RosterPdfButton" Text="Share PDF"
+                                    BackgroundColor="{StaticResource NavyDeep}"
+                                    TextColor="White" />
+                            <Button x:Name="RosterCsvButton" Text="Share CSV"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource NavyDeep}"
+                                    BorderColor="{StaticResource NavyDeep}"
+                                    BorderWidth="1" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label x:Name="StatusLabel"
+                       Style="{StaticResource BodySm}"
+                       HorizontalTextAlignment="Center"
+                       IsVisible="False" />
+
+                <Label Style="{StaticResource Caption}"
+                       Text="Member Roster is always a current snapshot — the period selector does not change it." />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <c:BottomTabBar Grid.Row="2" ActiveTab="Reports" />
+    </Grid>
+</ContentPage>
