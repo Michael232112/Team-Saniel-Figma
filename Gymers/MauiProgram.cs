@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Gymers.Data;
+using Gymers.Services;
 using QuestPDF.Infrastructure;
 
 namespace Gymers;
@@ -26,6 +27,7 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddSingleton<DataStore>();
+		builder.Services.AddSingleton<ReceiptService>();
 
 		builder.Services.AddTransient<Pages.LoginPage>();
 		builder.Services.AddTransient<Pages.DashboardPage>();
