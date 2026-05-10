@@ -158,15 +158,15 @@
 
   <h2>Ongoing Tasks</h2>
   <ul>
-    <li><strong>Trainer / Workout Plan / Equipment / Reports modules:</strong> designed in the project scope but UI and data model are not yet implemented in this iteration.</li>
+    <li><strong>Trainer / Workout Plan / Equipment modules:</strong> designed in the project scope but UI and data model are not yet implemented in this iteration.</li>
     <li><strong>Testing and polish:</strong> the build is clean and the demo workflow has been manually verified end-to-end on Mac Catalyst, but broader test coverage and visual polish remain.</li>
   </ul>
 
   <h2>Challenges Encountered</h2>
   <ul>
-    <li><strong>Time constraint:</strong> the original scope spans many modules, so this iteration prioritizes a fully working demo of the five core screens over breadth.</li>
+    <li><strong>Time constraint:</strong> the original scope spans many modules, so this iteration prioritizes a fully working demo of the six core screens over breadth.</li>
     <li><strong>Tooling setup:</strong> configuring .NET MAUI 10 with Xcode 26.2 for both the iOS simulator and Mac Catalyst targets required matching workload and platform versions.</li>
-    <li><strong>Scope management:</strong> validation and data flow were prioritized over the trainer/workout/equipment/reports modules, which were intentionally deferred to a later iteration.</li>
+    <li><strong>Scope management:</strong> validation and data flow were prioritized over the trainer/workout/equipment modules, which were intentionally deferred to a later iteration.</li>
     <li><strong>Data layer:</strong> shipped with an in-memory <code>DataStore</code> singleton (<code>ObservableCollection</code>s seeded from <code>SampleData</code>) so the demo has live, reactive lists. SQLite persistence is the next data-layer iteration.</li>
   </ul>
 
