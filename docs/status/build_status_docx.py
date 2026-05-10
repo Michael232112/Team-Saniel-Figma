@@ -105,17 +105,19 @@ def document_xml() -> str:
         ["Receipt PDF generation",
          "Completed",
          "Tapping any row in Recent Payments renders a one-page PDF receipt via UIKit's UIGraphicsPdfRenderer (built into iOS and Mac Catalyst SDKs, no third-party packages), saves under FileSystem.CacheDirectory/receipts/, and opens the system share sheet for save / email / AirDrop / print. Re-issues are deterministic from SQLite, so any historical payment can be re-printed; deleted-member receipts gracefully fall back to a placeholder."],
+        ["Reports + export",
+         "Completed",
+         "A Reports tab generates Revenue, Attendance, and Member Roster reports for a chosen period (Week / Month / All). Each report can be shared as a multi-page PDF (UIKit's UIGraphicsPdfRenderer) or a CSV (plain UTF-8, RFC 4180-style quoting with LF line endings), via the system share sheet — save to Files, email, AirDrop, or open in Numbers."],
     ]
 
     parts = [
         p("Gymers Mobile Application Project Status Update", "Title"),
         p("Team Fafa | Gym Management System | Status date: May 10, 2026", None, False, "667085"),
         p("Overall Status", "Heading1"),
-        p("The Gymers project is a working .NET MAUI iOS app with a Mac Catalyst secondary target for fast local verification. The five core screens for the demo workflow (Login, Dashboard, Members, Payments, Attendance) are implemented and persist their state in a SQLite-backed DataStore. Tapping any row in Recent Payments now generates a one-page PDF receipt via UIKit's native PDF renderer and opens the system share sheet for save / email / print. The build succeeds with 0 warnings and 0 errors on both iOS and Mac Catalyst. Exportable reports and the trainer/workout/equipment/reports modules from the original scope are deferred to the next iteration."),
+        p("The Gymers project is a working .NET MAUI iOS app with a Mac Catalyst secondary target for fast local verification. Six core screens (Login, Dashboard, Members, Payments, Attendance, Reports) are implemented and persist their state in a SQLite-backed DataStore. Tapping any row in Recent Payments generates a one-page PDF receipt via UIKit's native PDF renderer; the new Reports tab generates Revenue, Attendance, and Member Roster reports as multi-page PDF or CSV, all via the system share sheet. The build succeeds with 0 warnings and 0 errors on both iOS and Mac Catalyst. The trainer / workout / equipment modules from the original scope are deferred to the next iteration."),
         p("Completed Features", "Heading1"),
         table(["Feature", "Status", "Description"], completed_rows),
         p("Ongoing Tasks", "Heading1"),
-        bullet("Reports export: KPI and attendance data are visible in the app, but a dedicated Reports screen with export/download is not yet implemented."),
         bullet("Trainer, Workout Plan, Equipment, and Reports modules: designed in the project scope but UI and data model are not yet implemented in this iteration."),
         bullet("Testing and polish: the build is clean and the demo workflow has been manually verified end-to-end on Mac Catalyst, but broader test coverage and visual polish remain."),
         p("Challenges Encountered", "Heading1"),
