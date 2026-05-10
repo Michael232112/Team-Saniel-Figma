@@ -14,6 +14,9 @@ public partial class ListRow : ContentView
     public static readonly BindableProperty TrailingChevronProperty =
         BindableProperty.Create(nameof(TrailingChevron), typeof(bool), typeof(ListRow), false);
 
+    public static readonly BindableProperty CommandParameterProperty =
+        BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ListRow));
+
     public View? LeadingContent
     {
         get => (View?)GetValue(LeadingContentProperty);
@@ -34,6 +37,15 @@ public partial class ListRow : ContentView
         get => (bool)GetValue(TrailingChevronProperty);
         set => SetValue(TrailingChevronProperty, value);
     }
+    public object? CommandParameter
+    {
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
+    }
+
+    public event EventHandler? Tapped;
 
     public ListRow() => InitializeComponent();
+
+    void OnRowTapped(object? sender, TappedEventArgs e) => Tapped?.Invoke(this, EventArgs.Empty);
 }

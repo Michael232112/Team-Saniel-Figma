@@ -6,6 +6,9 @@
              x:Name="ThisRow">
     <Border BackgroundColor="{StaticResource SurfaceMuted}"
             StrokeThickness="0" Padding="16">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnRowTapped" />
+        </Border.GestureRecognizers>
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="24" />
         </Border.StrokeShape>
