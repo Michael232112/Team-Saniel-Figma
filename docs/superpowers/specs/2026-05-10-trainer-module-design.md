@@ -38,7 +38,7 @@ The Dashboard already has a **Coach Spotlight** card with hardcoded data (Marcus
 | 3 | **Reached via Dashboard "VIEW PERFORMANCE PROFILE"** | Wires an existing dead button; navigation is consistent with the app's "spotlight → list" pattern. |
 | 4 | **Coach Spotlight = top-rated trainer**  | Replaces hardcoded data with a real DB query; keeps the dashboard alive after schema changes. |
 | 5 | **Initials avatar (no photos)**          | Matches MembersPage; no MediaPicker dependency. |
-| 6 | **TrainersPage hides BottomTabBar, shows back button** | It's a detail destination, not a peer tab — back nav is honest. |
+| 6 | **TrainersPage renders BottomTabBar with `ActiveTab=Trainers` (no pill highlighted)** | `TopAppBar` doesn't have a leading-icon slot, so a back-arrow would mean extending a shared control. Cheaper: add an `AppTab.Trainers` enum value with no pill — all five existing pills render unhighlighted, and any pill taps navigate the user out. One-line change, no back-arrow ceremony, no new icon. |
 | 7 | **Sample data includes "Marcus Sterling"** | Demo continuity — the dashboard's spotlighted name doesn't change between this slice and the previous build. |
 
 ## 5. Architecture
@@ -117,7 +117,7 @@ Marcus Sterling stays at the top so the existing Coach Spotlight visuals don't s
 XAML mirrors MembersPage almost line-for-line:
 
 ```
-TopAppBar(Title="Trainers", Leading=BackArrow)        ← back nav, not a tab
+TopAppBar(Title="Trainers", TrailingIcon=Users)
   ScrollView
     SearchField(Placeholder="Search by name…")
     KpiCard(Variant=Light, Label="Active Trainers", Value="<count>",
@@ -125,11 +125,10 @@ TopAppBar(Title="Trainers", Leading=BackArrow)        ← back nav, not a tab
             TrailingIcon=Users)
     H2Section("All Trainers")
     VerticalStackLayout x:Name="TrainerList"
+BottomTabBar(ActiveTab=Trainers)                       ← new enum value, no pill
 ```
 
-`TopAppBar` already supports a leading icon (used on other pages); set `Shell.NavBarIsVisible="False"` and use `Shell.Current.GoToAsync("..")` on tap.
-
-**No `BottomTabBar`.** This page is a Dashboard detail destination, not a peer.
+`Shell.NavBarIsVisible="False"` is set on the page (matches all other tab pages). The `BottomTabBar` renders all five existing pills unhighlighted when `ActiveTab=Trainers`; the user taps any pill to leave the page.
 
 Code-behind mirrors MembersPage exactly:
 - ctor receives `DataStore` via DI
@@ -175,7 +174,13 @@ DashboardPage's existing transient registration is unchanged; its constructor si
 
 ### 5.8 BottomTabBar
 
-**No changes.** The `AppTab` enum is not extended; no new pill is added. TrainersPage doesn't render the bar.
+One additive change: extend `AppTab` with a `Trainers` value. **No new pill is rendered** — `ApplyActive` already does `ActiveTab == AppTab.Dashboard ? pale : Colors.Transparent` per pill, so a fresh `AppTab.Trainers` value naturally leaves every existing pill unhighlighted. The user taps any pill to leave TrainersPage.
+
+```csharp
+public enum AppTab { Dashboard, Members, Payments, Attendance, Reports, Trainers }
+```
+
+No changes to `BottomTabBar.xaml`, no changes to the `ApplyActive` body, no new tap handler.
 
 ## 6. Data Flow
 
