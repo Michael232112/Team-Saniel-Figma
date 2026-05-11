@@ -34,6 +34,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<Pages.AttendancePage>();
 		builder.Services.AddTransient<Pages.ReportsPage>();
 		builder.Services.AddTransient<Pages.TrainersPage>();
+		builder.Services.AddTransient<Pages.WorkoutsPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();
