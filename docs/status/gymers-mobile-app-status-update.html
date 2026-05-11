@@ -94,7 +94,7 @@
   <p class="meta">Team Fafa | Gym Management System | Status date: May 11, 2026</p>
 
   <div class="summary">
-    <p><strong>Overall Status:</strong> The Gymers project is a working .NET MAUI iOS app with a Mac Catalyst secondary target for fast local verification. Six core screens (Login, Dashboard, Members, Payments, Attendance, Reports) are implemented and persist their state in a SQLite-backed <code>DataStore</code>. Tapping any row in Recent Payments generates a one-page PDF receipt via UIKit's native PDF renderer; the new Reports tab generates Revenue, Attendance, and Member Roster reports as multi-page PDF or CSV, all via the system share sheet. The build succeeds with 0 warnings and 0 errors on both iOS and Mac Catalyst. The workout / equipment modules from the original scope are deferred to the next iteration.</p>
+    <p><strong>Overall Status:</strong> The Gymers project is a working .NET MAUI iOS app with a Mac Catalyst secondary target for fast local verification. Six core tab screens (Login, Dashboard, Members, Payments, Attendance, Reports) plus two route-only screens (Trainers, Workouts) are implemented and persist their state in a SQLite-backed <code>DataStore</code>. Tapping any row in Recent Payments generates a one-page PDF receipt via UIKit's native PDF renderer; the Reports tab generates Revenue, Attendance, and Member Roster reports as multi-page PDF or CSV, all via the system share sheet. The build succeeds with 0 warnings and 0 errors on both iOS and Mac Catalyst. The Equipment module from the original scope is the last remaining deferred item.</p>
   </div>
 
   <h2>Completed Features</h2>
@@ -159,11 +159,16 @@
       <td class="status-done">Completed</td>
       <td>A SQLite-backed Trainers screen lists all trainers with a live name-search filter; rows render as <code>ListRow</code>s with initials avatars and "Title · Rating · Sessions" subtitles. The Dashboard's Coach Spotlight now reads from the trainers table (top by rating, with sessions as a tiebreaker), and its <em>VIEW PERFORMANCE PROFILE</em> button navigates to the Trainers screen via <code>//Trainers</code>.</td>
     </tr>
+    <tr>
+      <td>Workout plans</td>
+      <td class="status-done">Completed</td>
+      <td>A SQLite-backed Workout Plans screen lists curated plans with a live name-search filter; each row shows the assigned trainer, level, weekly cadence, and total duration. The Dashboard's new <strong>Featured Workout Plan</strong> card highlights the top-ranked plan (<em>Foundations of Strength</em>, led by Marcus Sterling) and its <em>BROWSE WORKOUT PLANS</em> button navigates to the Workouts screen via <code>//Workouts</code>. Plans are FK'd to trainers, with the trainer name resolved at render time.</td>
+    </tr>
   </table>
 
   <h2>Ongoing Tasks</h2>
   <ul>
-    <li><strong>Workout Plan / Equipment modules:</strong> designed in the project scope but UI and data model are not yet implemented in this iteration.</li>
+    <li><strong>Equipment module:</strong> the last remaining README scope item not yet implemented; planned to mirror the trainer / workout-plan slice shape (SQLite-backed roster + search + dashboard hook).</li>
     <li><strong>Testing and polish:</strong> the build is clean and the demo workflow has been manually verified end-to-end on Mac Catalyst, but broader test coverage and visual polish remain.</li>
   </ul>
 
@@ -171,7 +176,7 @@
   <ul>
     <li><strong>Time constraint:</strong> the original scope spans many modules, so this iteration prioritizes a fully working demo of the six core screens over breadth.</li>
     <li><strong>Tooling setup:</strong> configuring .NET MAUI 10 with Xcode 26.2 for both the iOS simulator and Mac Catalyst targets required matching workload and platform versions.</li>
-    <li><strong>Scope management:</strong> validation and data flow were prioritized over the workout/equipment modules, which were intentionally deferred to a later iteration.</li>
+    <li><strong>Scope management:</strong> validation and data flow were prioritized first; Trainer and Workout Plan slices then landed once persistence and reports were stable, leaving only Equipment deferred.</li>
     <li><strong>Data layer:</strong> shipped with an in-memory <code>DataStore</code> singleton (<code>ObservableCollection</code>s seeded from <code>SampleData</code>) so the demo has live, reactive lists. SQLite persistence is the next data-layer iteration.</li>
   </ul>
 
@@ -208,7 +213,25 @@
     <div class="caption">Attendance screen with the Check In card and the Recent Check-ins list.</div>
   </div>
 
-  <h3>Screenshot 6: Login Error State</h3>
+  <h3>Screenshot 6: Reports + Export</h3>
+  <div class="shot">
+    <img src="screenshots/06-reports.png" alt="Reports tab">
+    <div class="caption">Reports tab with the period selector (Week / Month / All), the three report kinds (Revenue / Attendance / Member Roster), and the Export PDF / Export CSV buttons.</div>
+  </div>
+
+  <h3>Screenshot 7: Trainer Roster</h3>
+  <div class="shot">
+    <img src="screenshots/07-trainers.png" alt="Trainers screen">
+    <div class="caption">Trainers screen showing the search field, Active Trainers KPI card, and the All Trainers list with five rows (Marcus Sterling, Sienna Vega, Rohan Iyer, Maya Okafor, Caleb Whit).</div>
+  </div>
+
+  <h3>Screenshot 8: Workout Plans</h3>
+  <div class="shot">
+    <img src="screenshots/08-workouts.png" alt="Workout Plans screen">
+    <div class="caption">Workout Plans screen showing the search field, Active Plans KPI card, and the All Plans list (Foundations of Strength, HIIT Conditioning Cycle, Power Build 8-Week, Mindful Mobility Series, Active Recovery Block) with trainer-name and cadence subtitles.</div>
+  </div>
+
+  <h3>Screenshot 9: Login Error State</h3>
   <div class="shot">
     <img src="screenshots/v2-login-error.png" alt="Login error state">
     <div class="caption">Login screen with the inline validation error visible after pressing Sign In with empty or wrong credentials.</div>
