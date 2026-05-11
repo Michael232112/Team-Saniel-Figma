@@ -8,10 +8,11 @@ public sealed class DataStore
 {
     readonly GymersDb _db;
 
-    public ObservableCollection<Member>  Members  { get; }
-    public ObservableCollection<Payment> Payments { get; }
-    public ObservableCollection<CheckIn> CheckIns { get; }
-    public ObservableCollection<Trainer> Trainers { get; }
+    public ObservableCollection<Member>      Members      { get; }
+    public ObservableCollection<Payment>     Payments     { get; }
+    public ObservableCollection<CheckIn>     CheckIns     { get; }
+    public ObservableCollection<Trainer>     Trainers     { get; }
+    public ObservableCollection<WorkoutPlan> WorkoutPlans { get; }
 
     public DataStore()
     {
@@ -30,10 +31,16 @@ public sealed class DataStore
             _db.SeedTrainers(SampleData.Trainers);
         }
 
-        Members  = new ObservableCollection<Member>(_db.GetMembers());
-        Payments = new ObservableCollection<Payment>(_db.GetPaymentsNewestFirst());
-        CheckIns = new ObservableCollection<CheckIn>(_db.GetCheckInsNewestFirst());
-        Trainers = new ObservableCollection<Trainer>(_db.GetTrainersByRatingDesc());
+        if (_db.IsWorkoutPlansEmpty())
+        {
+            _db.SeedWorkoutPlans(SampleData.WorkoutPlans);
+        }
+
+        Members      = new ObservableCollection<Member>(_db.GetMembers());
+        Payments     = new ObservableCollection<Payment>(_db.GetPaymentsNewestFirst());
+        CheckIns     = new ObservableCollection<CheckIn>(_db.GetCheckInsNewestFirst());
+        Trainers     = new ObservableCollection<Trainer>(_db.GetTrainersByRatingDesc());
+        WorkoutPlans = new ObservableCollection<WorkoutPlan>(_db.GetWorkoutPlansOrdered());
     }
 
     public Member? FindMemberByName(string? name) =>
@@ -53,6 +60,17 @@ public sealed class DataStore
                 t.Name.Contains(query.Trim(), StringComparison.OrdinalIgnoreCase));
 
     public Trainer? TopTrainer() => Trainers.FirstOrDefault();
+
+    public IEnumerable<WorkoutPlan> SearchWorkoutPlans(string? query) =>
+        string.IsNullOrWhiteSpace(query)
+            ? WorkoutPlans
+            : WorkoutPlans.Where(p =>
+                p.Name.Contains(query.Trim(), StringComparison.OrdinalIgnoreCase));
+
+    public WorkoutPlan? TopPlan() => WorkoutPlans.FirstOrDefault();
+
+    public string TrainerName(string trainerId) =>
+        Trainers.FirstOrDefault(t => t.Id == trainerId)?.Name ?? "—";
 
     public async Task<Payment> RecordPaymentAsync(Member m, decimal amount, string method)
     {
