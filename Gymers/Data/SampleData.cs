@@ -52,6 +52,20 @@ public static class SampleData
         new Trainer("t5", "Caleb Whit",      "Mobility Coach",         4.5m,  64),
     };
 
+    public static readonly IReadOnlyList<WorkoutPlan> WorkoutPlans = new[]
+    {
+        new WorkoutPlan("p1", "Foundations of Strength",  "t1", "Beginner",     3, 6,
+            "Compound lifts and bracing fundamentals for new gym members.",        1),
+        new WorkoutPlan("p2", "HIIT Conditioning Cycle",  "t2", "Intermediate", 4, 4,
+            "Four-week conditioning block built around 20-min HIIT circuits.",     2),
+        new WorkoutPlan("p3", "Power Build 8-Week",       "t3", "Advanced",     5, 8,
+            "Heavy-day / volume-day split for intermediate-to-advanced lifters.",  3),
+        new WorkoutPlan("p4", "Mindful Mobility Series",  "t4", "Beginner",     3, 6,
+            "Yoga-anchored mobility and breathwork; recovery between sessions.",   4),
+        new WorkoutPlan("p5", "Active Recovery Block",    "t5", "Intermediate", 3, 4,
+            "Low-intensity flow + mobility for deload weeks.",                     5),
+    };
+
     public static Member GetMember(string id) =>
         Members.First(m => m.Id == id);
 }
