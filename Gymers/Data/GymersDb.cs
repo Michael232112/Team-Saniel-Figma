@@ -19,6 +19,7 @@ public sealed class GymersDb
         _sync.CreateTable<PaymentRow>();
         _sync.CreateTable<CheckInRow>();
         _sync.CreateTable<TrainerRow>();
+        _sync.CreateTable<WorkoutPlanRow>();
     }
 
     public SQLiteAsyncConnection Async => _async ??= new SQLiteAsyncConnection(_path);
@@ -69,6 +70,20 @@ public sealed class GymersDb
              .ToList()
              .OrderByDescending(r => decimal.Parse(r.RatingText, CultureInfo.InvariantCulture))
              .ThenByDescending(r => r.SessionsCompleted)
+             .Select(ToRecord);
+
+    public bool IsWorkoutPlansEmpty() =>
+        _sync.Table<WorkoutPlanRow>().Count() == 0;
+
+    public void SeedWorkoutPlans(IEnumerable<WorkoutPlan> plans)
+    {
+        foreach (var p in plans) _sync.Insert(ToRow(p));
+    }
+
+    public IEnumerable<WorkoutPlan> GetWorkoutPlansOrdered() =>
+        _sync.Table<WorkoutPlanRow>()
+             .OrderBy(r => r.OrderRank)
+             .ToList()
              .Select(ToRecord);
 
     public Task InsertPaymentAsync(Payment p) => Async.InsertAsync(ToRow(p));
@@ -130,4 +145,20 @@ public sealed class GymersDb
         r.Title,
         decimal.Parse(r.RatingText, CultureInfo.InvariantCulture),
         r.SessionsCompleted);
+
+    static WorkoutPlanRow ToRow(WorkoutPlan p) => new()
+    {
+        Id              = p.Id,
+        Name            = p.Name,
+        TrainerId       = p.TrainerId,
+        Level           = p.Level,
+        SessionsPerWeek = p.SessionsPerWeek,
+        DurationWeeks   = p.DurationWeeks,
+        Summary         = p.Summary,
+        OrderRank       = p.OrderRank
+    };
+
+    static WorkoutPlan ToRecord(WorkoutPlanRow r) => new(
+        r.Id, r.Name, r.TrainerId, r.Level,
+        r.SessionsPerWeek, r.DurationWeeks, r.Summary, r.OrderRank);
 }
