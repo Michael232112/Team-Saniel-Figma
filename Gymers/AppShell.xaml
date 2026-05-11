@@ -21,4 +21,7 @@
         <ShellContent Route="Reports"    ContentTemplate="{DataTemplate pages:ReportsPage}" />
     </TabBar>
 
+    <ShellContent Route="Trainers"
+                  ContentTemplate="{DataTemplate pages:TrainersPage}" />
+
 </Shell>

@@ -33,6 +33,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<Pages.PaymentsPage>();
 		builder.Services.AddTransient<Pages.AttendancePage>();
 		builder.Services.AddTransient<Pages.ReportsPage>();
+		builder.Services.AddTransient<Pages.TrainersPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();
