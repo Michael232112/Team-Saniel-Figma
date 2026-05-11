@@ -16,6 +16,9 @@ public partial class DashboardPage : ContentPage
         ApplyCoachSpotlight();
         ProfileButton.Clicked += async (_, _) =>
             await Shell.Current.GoToAsync("//Trainers");
+        ApplyFeaturedPlan();
+        BrowsePlansButton.Clicked += async (_, _) =>
+            await Shell.Current.GoToAsync("//Workouts");
         BuildClassList();
     }
 
@@ -33,6 +36,25 @@ public partial class DashboardPage : ContentPage
         CoachTitle.Text    = top.Title;
         CoachRating.Text   = $"{top.Rating:0.0}/5.0";
         CoachSessions.Text = top.SessionsCompleted.ToString("N0");
+    }
+
+    void ApplyFeaturedPlan()
+    {
+        var top = _data.TopPlan();
+        if (top is null)
+        {
+            FeaturedPlanName.Text         = "No plans configured.";
+            FeaturedPlanTrainer.IsVisible = false;
+            FeaturedPlanMeta.IsVisible    = false;
+            FeaturedPlanSummary.IsVisible = false;
+            BrowsePlansButton.IsVisible   = false;
+            return;
+        }
+
+        FeaturedPlanName.Text    = top.Name;
+        FeaturedPlanTrainer.Text = _data.TrainerName(top.TrainerId);
+        FeaturedPlanMeta.Text    = $"{top.Level}  ·  {top.SessionsPerWeek}×/wk  ·  {top.DurationWeeks} wk";
+        FeaturedPlanSummary.Text = top.Summary;
     }
 
     static string InitialsFor(string name)

@@ -143,6 +143,36 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Featured Workout Plan -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Style="{StaticResource H2Section}" Text="Featured Workout Plan" />
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label x:Name="FeaturedPlanName"
+                                   Style="{StaticResource H3Card}"
+                                   Text="—" />
+                            <Label x:Name="FeaturedPlanTrainer"
+                                   Style="{StaticResource BodyMd}"
+                                   Text="" />
+                        </VerticalStackLayout>
+
+                        <Label x:Name="FeaturedPlanMeta"
+                               FontFamily="{StaticResource FontInterSemiBold}"
+                               FontSize="14"
+                               TextColor="{StaticResource NavyDeep}"
+                               Text="" />
+
+                        <Label x:Name="FeaturedPlanSummary"
+                               Style="{StaticResource BodyMd}"
+                               TextColor="{StaticResource TextMuted}"
+                               Text="" />
+
+                        <c:PrimaryButton x:Name="BrowsePlansButton"
+                                         Text="BROWSE WORKOUT PLANS" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Today's Classes -->
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="32">
