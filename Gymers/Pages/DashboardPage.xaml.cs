@@ -22,7 +22,11 @@ public partial class DashboardPage : ContentPage
     void ApplyCoachSpotlight()
     {
         var top = _data.TopTrainer();
-        if (top is null) return;   // empty trainers table — keep design-time XAML text
+        // Empty-trainers fallback: keep the design-time XAML text. Task 4 re-seeds on
+        // every empty-table launch, so this branch is unreachable today; spec §7's
+        // "No trainers configured" placeholder card is deferred until the table can be
+        // wiped at runtime.
+        if (top is null) return;
 
         CoachInitials.Text = InitialsFor(top.Name);
         CoachName.Text     = top.Name;
