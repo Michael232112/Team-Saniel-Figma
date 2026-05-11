@@ -102,7 +102,8 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="24" />
                             </Border.StrokeShape>
-                            <Label Text="MS"
+                            <Label x:Name="CoachInitials"
+                                   Text="MS"
                                    FontFamily="{StaticResource FontManropeBold}"
                                    FontSize="28"
                                    TextColor="{StaticResource NavyHeading}"
@@ -111,8 +112,9 @@
                         </Border>
 
                         <VerticalStackLayout Spacing="0">
-                            <Label Style="{StaticResource H3Card}" Text="Marcus Sterling" />
-                            <Label FontFamily="{StaticResource FontInterSemiBold}"
+                            <Label x:Name="CoachName" Style="{StaticResource H3Card}" Text="Marcus Sterling" />
+                            <Label x:Name="CoachTitle"
+                                   FontFamily="{StaticResource FontInterSemiBold}"
                                    FontSize="14"
                                    TextColor="{StaticResource NavyDeep}"
                                    Text="Lead Performance Coach" />
@@ -121,7 +123,7 @@
                         <VerticalStackLayout Spacing="16">
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Grid.Column="0" Style="{StaticResource BodyMd}" Text="Client Rating" />
-                                <Label Grid.Column="1"
+                                <Label x:Name="CoachRating" Grid.Column="1"
                                        FontFamily="{StaticResource FontInterSemiBold}"
                                        FontSize="14"
                                        TextColor="{StaticResource TextPrimary}"
@@ -129,7 +131,7 @@
                             </Grid>
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Grid.Column="0" Style="{StaticResource BodyMd}" Text="Sessions Completed" />
-                                <Label Grid.Column="1"
+                                <Label x:Name="CoachSessions" Grid.Column="1"
                                        FontFamily="{StaticResource FontInterSemiBold}"
                                        FontSize="14"
                                        TextColor="{StaticResource TextPrimary}"
@@ -137,7 +139,7 @@
                             </Grid>
                         </VerticalStackLayout>
 
-                        <c:PrimaryButton Text="VIEW PERFORMANCE PROFILE" />
+                        <c:PrimaryButton x:Name="ProfileButton" Text="VIEW PERFORMANCE PROFILE" />
                     </VerticalStackLayout>
                 </Border>
 

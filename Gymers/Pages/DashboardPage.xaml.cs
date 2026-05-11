@@ -7,10 +7,40 @@ namespace Gymers.Pages;
 
 public partial class DashboardPage : ContentPage
 {
-    public DashboardPage()
+    readonly DataStore _data;
+
+    public DashboardPage(DataStore data)
     {
+        _data = data;
         InitializeComponent();
+        ApplyCoachSpotlight();
+        ProfileButton.Clicked += async (_, _) =>
+            await Shell.Current.GoToAsync("//Trainers");
         BuildClassList();
+    }
+
+    void ApplyCoachSpotlight()
+    {
+        var top = _data.TopTrainer();
+        if (top is null) return;   // empty trainers table — keep design-time XAML text
+
+        CoachInitials.Text = InitialsFor(top.Name);
+        CoachName.Text     = top.Name;
+        CoachTitle.Text    = top.Title;
+        CoachRating.Text   = $"{top.Rating:0.0}/5.0";
+        CoachSessions.Text = top.SessionsCompleted.ToString("N0");
+    }
+
+    static string InitialsFor(string name)
+    {
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length >= 2)
+            return $"{parts[0][0]}{parts[1][0]}".ToUpperInvariant();
+        if (parts.Length == 1 && parts[0].Length >= 2)
+            return parts[0][..2].ToUpperInvariant();
+        if (parts.Length == 1 && parts[0].Length == 1)
+            return parts[0].ToUpperInvariant();
+        return "?";
     }
 
     void BuildClassList()
