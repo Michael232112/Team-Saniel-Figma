@@ -44,6 +44,7 @@ public partial class LoginPage : ContentPage
         { ShowError("Invalid credentials for the selected role."); return; }
 
         ErrorLabel.IsVisible = false;
+        Services.Session.Current.SignIn(u, _role == SelectedRole.Admin);
         await Shell.Current.GoToAsync("//Dashboard");
     }
 

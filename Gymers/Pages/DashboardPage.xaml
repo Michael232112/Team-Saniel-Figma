@@ -8,8 +8,17 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
 
-        <c:TopAppBar Grid.Row="0" Title="Dashboard"
-                     TrailingIconGlyph="{x:Static c:Icons.Bell}" />
+        <Grid Grid.Row="0" RowDefinitions="Auto,Auto">
+            <c:TopAppBar Grid.Row="0" Title="Dashboard"
+                         TrailingIconGlyph="{x:Static c:Icons.Bell}" />
+            <Label x:Name="RoleBadge"
+                   Grid.Row="1"
+                   Style="{StaticResource BodySm}"
+                   TextColor="{StaticResource TextMuted}"
+                   HorizontalTextAlignment="End"
+                   Padding="24,0,24,8"
+                   Text="" />
+        </Grid>
 
         <ScrollView Grid.Row="1" Padding="24,16,24,16">
             <VerticalStackLayout Spacing="16">
@@ -26,7 +35,8 @@
                            Caption="vs yesterday"
                            TrailingIconGlyph="{x:Static c:Icons.Calendar}" />
 
-                <c:KpiCard Variant="Dark"
+                <c:KpiCard x:Name="MonthlyEarningsKpi"
+                           Variant="Dark"
                            Label="Monthly Earnings" Value="$45,000"
                            DeltaText="+8%" DeltaDirection="Up"
                            Caption="projected growth"

@@ -1,6 +1,7 @@
 using Gymers.Controls;
 using Gymers.Data;
 using Gymers.Models;
+using Gymers.Services;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace Gymers.Pages;
@@ -13,6 +14,7 @@ public partial class DashboardPage : ContentPage
     {
         _data = data;
         InitializeComponent();
+        ApplyRole();
         ApplyCoachSpotlight();
         ProfileButton.Clicked += async (_, _) =>
             await Shell.Current.GoToAsync("//Trainers");
@@ -23,6 +25,13 @@ public partial class DashboardPage : ContentPage
         BrowseEquipmentButton.Clicked += async (_, _) =>
             await Shell.Current.GoToAsync("//Equipment");
         BuildClassList();
+    }
+
+    void ApplyRole()
+    {
+        var session = Session.Current;
+        RoleBadge.Text               = $"Signed in as {session.RoleLabel}";
+        MonthlyEarningsKpi.IsVisible = session.IsAdmin;
     }
 
     void ApplyCoachSpotlight()

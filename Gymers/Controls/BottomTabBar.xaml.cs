@@ -1,3 +1,5 @@
+using Gymers.Services;
+
 namespace Gymers.Controls;
 
 public enum AppTab { Dashboard, Members, Payments, Attendance, Reports, Trainers, Workouts, Equipment }
@@ -17,7 +19,27 @@ public partial class BottomTabBar : ContentView
     public BottomTabBar()
     {
         InitializeComponent();
+        ApplyRole();
         ApplyActive();
+    }
+
+    void ApplyRole()
+    {
+        if (Session.Current.IsAdmin) return;
+
+        // Staff layout: Dashboard / Members / Payments / Attendance (no Reports).
+        // Staff handles walk-in payments + receipts per README scope, so Payments stays.
+        var grid = (Grid)((Border)Content).Content;
+        grid.ColumnDefinitions.Clear();
+        for (int i = 0; i < 4; i++)
+            grid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+
+        Grid.SetColumn(DashboardPill,  0);
+        Grid.SetColumn(MembersPill,    1);
+        Grid.SetColumn(PaymentsPill,   2);
+        Grid.SetColumn(AttendancePill, 3);
+
+        ReportsPill.IsVisible = false;
     }
 
     void ApplyActive()
