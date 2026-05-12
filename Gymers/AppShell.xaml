@@ -27,4 +27,7 @@
     <ShellContent Route="Workouts"
                   ContentTemplate="{DataTemplate pages:WorkoutsPage}" />
 
+    <ShellContent Route="Equipment"
+                  ContentTemplate="{DataTemplate pages:EquipmentPage}" />
+
 </Shell>
