@@ -13,6 +13,10 @@
 
         <ScrollView Grid.Row="1" Padding="24,16">
             <VerticalStackLayout Spacing="16">
+                <c:PrimaryButton x:Name="AddMemberButton"
+                                 Text="+ ADD MEMBER"
+                                 IsVisible="False" />
+
                 <c:SearchField x:Name="Search" Placeholder="Search by name…" />
 
                 <c:KpiCard Variant="Light"
@@ -28,5 +32,11 @@
         </ScrollView>
 
         <c:BottomTabBar Grid.Row="2" ActiveTab="Members" />
+
+        <Grid x:Name="FormOverlay"
+              Grid.RowSpan="3"
+              Padding="24"
+              BackgroundColor="#99000000"
+              IsVisible="False" />
     </Grid>
 </ContentPage>

@@ -91,6 +91,110 @@ public sealed class DataStore
     public int MaintenanceEquipmentCount() =>
         Equipment.Count - OperationalEquipmentCount();
 
+    public async Task<Member> AddMemberAsync(string name, MembershipTier tier, string status, DateOnly expires)
+    {
+        var member = new Member(NextId(Members.Select(m => m.Id), "m"), name.Trim(), tier, status, expires);
+        await _db.InsertMemberAsync(member);
+        await MainThread.InvokeOnMainThreadAsync(() => Members.Add(member));
+        return member;
+    }
+
+    public async Task UpdateMemberAsync(Member member)
+    {
+        await _db.UpdateMemberAsync(member);
+        await ReplaceOnMainThreadAsync(Members, member, m => m.Id == member.Id);
+    }
+
+    public async Task DeleteMemberAsync(Member member)
+    {
+        await _db.DeleteMemberAsync(member);
+        await MainThread.InvokeOnMainThreadAsync(() => Members.Remove(member));
+    }
+
+    public async Task<Trainer> AddTrainerAsync(string name, string title, decimal rating, int sessionsCompleted)
+    {
+        var trainer = new Trainer(NextId(Trainers.Select(t => t.Id), "t"), name.Trim(), title.Trim(), rating, sessionsCompleted);
+        await _db.InsertTrainerAsync(trainer);
+        await MainThread.InvokeOnMainThreadAsync(() => Trainers.Add(trainer));
+        return trainer;
+    }
+
+    public async Task UpdateTrainerAsync(Trainer trainer)
+    {
+        await _db.UpdateTrainerAsync(trainer);
+        await ReplaceOnMainThreadAsync(Trainers, trainer, t => t.Id == trainer.Id);
+    }
+
+    public async Task DeleteTrainerAsync(Trainer trainer)
+    {
+        await _db.DeleteTrainerAsync(trainer);
+        await MainThread.InvokeOnMainThreadAsync(() => Trainers.Remove(trainer));
+    }
+
+    public async Task<WorkoutPlan> AddWorkoutPlanAsync(
+        string name,
+        string trainerId,
+        string level,
+        int sessionsPerWeek,
+        int durationWeeks,
+        string summary)
+    {
+        int orderRank = WorkoutPlans.Count == 0 ? 1 : WorkoutPlans.Max(p => p.OrderRank) + 1;
+        var plan = new WorkoutPlan(
+            NextId(WorkoutPlans.Select(p => p.Id), "p"),
+            name.Trim(),
+            trainerId,
+            level.Trim(),
+            sessionsPerWeek,
+            durationWeeks,
+            summary.Trim(),
+            orderRank);
+
+        await _db.InsertWorkoutPlanAsync(plan);
+        await MainThread.InvokeOnMainThreadAsync(() => WorkoutPlans.Add(plan));
+        return plan;
+    }
+
+    public async Task UpdateWorkoutPlanAsync(WorkoutPlan plan)
+    {
+        await _db.UpdateWorkoutPlanAsync(plan);
+        await ReplaceOnMainThreadAsync(WorkoutPlans, plan, p => p.Id == plan.Id);
+    }
+
+    public async Task DeleteWorkoutPlanAsync(WorkoutPlan plan)
+    {
+        await _db.DeleteWorkoutPlanAsync(plan);
+        await MainThread.InvokeOnMainThreadAsync(() => WorkoutPlans.Remove(plan));
+    }
+
+    public async Task<Equipment> AddEquipmentAsync(string name, string category, string status, string location)
+    {
+        int orderRank = Equipment.Count == 0 ? 1 : Equipment.Max(e => e.OrderRank) + 1;
+        var item = new Equipment(
+            NextId(Equipment.Select(e => e.Id), "e"),
+            name.Trim(),
+            category.Trim(),
+            status.Trim(),
+            location.Trim(),
+            orderRank);
+
+        await _db.InsertEquipmentAsync(item);
+        await MainThread.InvokeOnMainThreadAsync(() => Equipment.Add(item));
+        return item;
+    }
+
+    public async Task UpdateEquipmentAsync(Equipment item)
+    {
+        await _db.UpdateEquipmentAsync(item);
+        await ReplaceOnMainThreadAsync(Equipment, item, e => e.Id == item.Id);
+    }
+
+    public async Task DeleteEquipmentAsync(Equipment item)
+    {
+        await _db.DeleteEquipmentAsync(item);
+        await MainThread.InvokeOnMainThreadAsync(() => Equipment.Remove(item));
+    }
+
     public async Task<Payment> RecordPaymentAsync(Member m, decimal amount, string method)
     {
         int nextId      = Payments.Count == 0 ? 1043 : Payments.Max(p => p.Id) + 1;
@@ -113,4 +217,24 @@ public sealed class DataStore
     public IEnumerable<Member> GetExpiringSoonMembers() =>
         Members.Where(m =>
             string.Equals(m.Status, "Expiring Soon", StringComparison.OrdinalIgnoreCase));
+
+    static string NextId(IEnumerable<string> ids, string prefix)
+    {
+        int max = ids
+            .Where(id => id.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            .Select(id => int.TryParse(id[prefix.Length..], out int n) ? n : 0)
+            .DefaultIfEmpty(0)
+            .Max();
+
+        return $"{prefix}{max + 1}";
+    }
+
+    static Task ReplaceOnMainThreadAsync<T>(ObservableCollection<T> collection, T item, Func<T, bool> predicate) =>
+        MainThread.InvokeOnMainThreadAsync(() =>
+        {
+            int index = collection.Select((value, i) => new { value, i })
+                                  .FirstOrDefault(x => predicate(x.value))?.i ?? -1;
+            if (index >= 0)
+                collection[index] = item;
+        });
 }

@@ -101,8 +101,24 @@ public sealed class GymersDb
              .ToList()
              .Select(ToRecord);
 
+    public Task InsertMemberAsync(Member m) => Async.InsertAsync(ToRow(m));
+    public Task UpdateMemberAsync(Member m) => Async.UpdateAsync(ToRow(m));
+    public Task DeleteMemberAsync(Member m) => Async.DeleteAsync(ToRow(m));
+
     public Task InsertPaymentAsync(Payment p) => Async.InsertAsync(ToRow(p));
     public Task InsertCheckInAsync(CheckIn c) => Async.InsertAsync(ToRow(c));
+
+    public Task InsertTrainerAsync(Trainer t) => Async.InsertAsync(ToRow(t));
+    public Task UpdateTrainerAsync(Trainer t) => Async.UpdateAsync(ToRow(t));
+    public Task DeleteTrainerAsync(Trainer t) => Async.DeleteAsync(ToRow(t));
+
+    public Task InsertWorkoutPlanAsync(WorkoutPlan p) => Async.InsertAsync(ToRow(p));
+    public Task UpdateWorkoutPlanAsync(WorkoutPlan p) => Async.UpdateAsync(ToRow(p));
+    public Task DeleteWorkoutPlanAsync(WorkoutPlan p) => Async.DeleteAsync(ToRow(p));
+
+    public Task InsertEquipmentAsync(Equipment e) => Async.InsertAsync(ToRow(e));
+    public Task UpdateEquipmentAsync(Equipment e) => Async.UpdateAsync(ToRow(e));
+    public Task DeleteEquipmentAsync(Equipment e) => Async.DeleteAsync(ToRow(e));
 
     static MemberRow ToRow(Member m) => new()
     {

@@ -18,6 +18,12 @@ public partial class ReportsPage : ContentPage
         _reports = reports;
         InitializeComponent();
 
+        if (!Session.Current.IsAdmin)
+        {
+            Loaded += async (_, _) => await Shell.Current.GoToAsync("//Dashboard");
+            return;
+        }
+
         WeekButton.Clicked  += (_, _) => SetPeriod(ReportPeriod.Week);
         MonthButton.Clicked += (_, _) => SetPeriod(ReportPeriod.Month);
         AllButton.Clicked   += (_, _) => SetPeriod(ReportPeriod.All);

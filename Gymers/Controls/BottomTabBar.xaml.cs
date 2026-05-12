@@ -29,7 +29,8 @@ public partial class BottomTabBar : ContentView
 
         // Staff layout: Dashboard / Members / Payments / Attendance (no Reports).
         // Staff handles walk-in payments + receipts per README scope, so Payments stays.
-        var grid = (Grid)((Border)Content).Content;
+        if (Content is not Border { Content: Grid grid }) return;
+
         grid.ColumnDefinitions.Clear();
         for (int i = 0; i < 4; i++)
             grid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
