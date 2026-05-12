@@ -14,7 +14,11 @@ public partial class EquipmentPage : ContentPage
         _data = data;
         InitializeComponent();
         Search.PropertyChanged += OnSearchChanged;
-        _data.Equipment.CollectionChanged += (_, _) => Render(Search.Text ?? "");
+        _data.Equipment.CollectionChanged += (_, _) =>
+        {
+            ApplyStatusKpi();
+            Render(Search.Text ?? "");
+        };
         ApplyStatusKpi();
         Render("");
     }
