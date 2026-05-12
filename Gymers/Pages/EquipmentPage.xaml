@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:Gymers.Controls"
+             x:Class="Gymers.Pages.EquipmentPage"
+             BackgroundColor="{StaticResource BgApp}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <c:TopAppBar Grid.Row="0" Title="Equipment"
+                     TrailingIconGlyph="{x:Static c:Icons.Users}" />
+
+        <ScrollView Grid.Row="1" Padding="24,16">
+            <VerticalStackLayout Spacing="16">
+                <c:SearchField x:Name="Search" Placeholder="Search by name…" />
+
+                <c:KpiCard x:Name="StatusKpi"
+                           Variant="Light"
+                           Label="Operational" Value="0"
+                           Caption="of 0 items"
+                           TrailingIconGlyph="{x:Static c:Icons.Users}" />
+
+                <Label Style="{StaticResource H2Section}" Text="All Equipment" />
+
+                <VerticalStackLayout x:Name="EquipmentList" Spacing="12" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <c:BottomTabBar Grid.Row="2" ActiveTab="Equipment" />
+    </Grid>
+</ContentPage>
