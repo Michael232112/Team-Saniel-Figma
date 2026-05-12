@@ -49,6 +49,6 @@ public partial class TrainersPage : ContentPage
     {
         LeadingContent = AvatarFactory.MakeInitial(t.Name),
         Title          = t.Name,
-        Subtitle       = $"{t.Title} · {t.Rating:0.0}/5.0 · {t.SessionsCompleted} sessions"
+        Subtitle       = $"{t.Title} · {t.Rating:0.0}/5.0 · {t.SessionsCompleted} sessions\n{TrainerSchedules.GetFor(t.Id)}"
     };
 }

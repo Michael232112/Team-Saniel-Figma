@@ -69,6 +69,7 @@ public partial class DashboardPage : ContentPage
         CoachTitle.Text    = top.Title;
         CoachRating.Text   = $"{top.Rating:0.0}/5.0";
         CoachSessions.Text = top.SessionsCompleted.ToString("N0");
+        CoachSchedule.Text = TrainerSchedules.GetFor(top.Id);
     }
 
     void ApplyFeaturedPlan()

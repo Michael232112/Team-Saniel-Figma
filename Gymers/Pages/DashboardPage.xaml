@@ -171,6 +171,14 @@
                                        TextColor="{StaticResource TextPrimary}"
                                        Text="142" />
                             </Grid>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Style="{StaticResource BodyMd}" Text="Schedule" />
+                                <Label x:Name="CoachSchedule" Grid.Column="1"
+                                       FontFamily="{StaticResource FontInterSemiBold}"
+                                       FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       Text="—" />
+                            </Grid>
                         </VerticalStackLayout>
 
                         <c:PrimaryButton x:Name="ProfileButton" Text="VIEW PERFORMANCE PROFILE" />

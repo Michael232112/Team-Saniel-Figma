@@ -126,13 +126,16 @@ def document_xml() -> str:
         ["Membership expiry alerts",
          "Completed",
          "The Dashboard now prepends a tappable yellow alert banner listing members whose Status is 'Expiring Soon' (Sam Chen in the seed). The banner shows the count and the comma-joined member names; tap navigates to the Members screen for follow-up. It stays hidden when no memberships are expiring, surfacing only when action is required. Visible to both Admin and Staff per the README's 'Membership Status Viewing' scope."],
+        ["Trainer schedules",
+         "Completed",
+         "Every Trainer row now displays a weekly schedule string (e.g. 'Mon/Wed/Fri · 6am–2pm' for Marcus Sterling, 'Tue/Thu/Sat · 5pm–10pm' for Sienna Vega) as a second subtitle line; the Dashboard's Coach Spotlight card surfaces the same schedule for the top trainer alongside Client Rating and Sessions Completed. Closes the README's 'Trainer Schedule Viewing' scope item for Staff."],
     ]
 
     parts = [
         p("Gymers Mobile Application Project Status Update", "Title"),
         p("Team Fafa | Gym Management System | Status date: May 12, 2026", None, False, "667085"),
         p("Overall Status", "Heading1"),
-        p("The Gymers project is a working .NET MAUI iOS app with a Mac Catalyst secondary target for fast local verification. Six core tab screens (Login, Dashboard, Members, Payments, Attendance, Reports) plus three route-only screens (Trainers, Workouts, Equipment) are implemented and persist their state in a SQLite-backed DataStore. Tapping any row in Recent Payments generates a one-page PDF receipt via UIKit's native PDF renderer; the Reports tab generates Revenue, Attendance, and Member Roster reports as multi-page PDF or CSV via the system share sheet. Role-based access control persists the Admin/Staff role from login through navigation, reflowing the bottom tab bar and hiding admin-only Dashboard analytics for Staff. Attendance offers a simulated QR/ID scan check-in alongside name search, and the Dashboard surfaces expiring-membership alerts. The build succeeds with 0 warnings and 0 errors on both iOS and Mac Catalyst. All README scope items are addressed with one acknowledged gap: trainer-schedule viewing today surfaces the trainer roster (name, title, rating, sessions) rather than per-trainer weekly time slots; broader test coverage and visual polish also remain."),
+        p("The Gymers project is a working .NET MAUI iOS app with a Mac Catalyst secondary target for fast local verification. Six core tab screens (Login, Dashboard, Members, Payments, Attendance, Reports) plus three route-only screens (Trainers, Workouts, Equipment) are implemented and persist their state in a SQLite-backed DataStore. Tapping any row in Recent Payments generates a one-page PDF receipt via UIKit's native PDF renderer; the Reports tab generates Revenue, Attendance, and Member Roster reports as multi-page PDF or CSV via the system share sheet. Role-based access control persists the Admin/Staff role from login through navigation, reflowing the bottom tab bar and hiding admin-only Dashboard analytics for Staff. Attendance offers a simulated QR/ID scan check-in alongside name search, the Dashboard surfaces expiring-membership alerts, and every trainer row + the Coach Spotlight card surfaces a weekly schedule. The build succeeds with 0 warnings and 0 errors on both iOS and Mac Catalyst. Every README scope item is implemented; remaining work is broader test coverage and visual polish."),
         p("Completed Features", "Heading1"),
         table(["Feature", "Status", "Description"], completed_rows),
         p("Ongoing Tasks", "Heading1"),
@@ -168,6 +171,8 @@ def document_xml() -> str:
                     "screenshots/10-staff-dashboard.png — Dashboard signed in as Staff: 4-pill bottom tab bar with Reports hidden, 'Signed in as Staff' badge under the top app bar, no Monthly Earnings KPI, and the yellow expiring-soon banner visible at the top of the scroll."),
         placeholder("Screenshot 12: Member ID Scan Overlay",
                     "screenshots/11-scan-overlay.png — Attendance screen with the SCAN MEMBER ID overlay in its captured state: viewfinder mock with 'CAPTURED' text and the detected-member card showing the member name, tier, and ID with the CONFIRM CHECK-IN button."),
+        placeholder("Screenshot 13: Trainer Schedules",
+                    "screenshots/12-trainer-schedules.png — Trainers screen showing each trainer row with name/title/rating/sessions on one line and weekly schedule (Mon/Wed/Fri · 6am–2pm style) on a second line."),
         p("Build Verification", "Heading1"),
         table(["Command", "Result"], [
             ["dotnet build Gymers/Gymers.csproj -f net10.0-ios -c Debug", "Build succeeded with 0 warnings and 0 errors."],
