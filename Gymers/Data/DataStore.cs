@@ -109,4 +109,8 @@ public sealed class DataStore
         await MainThread.InvokeOnMainThreadAsync(() => CheckIns.Insert(0, c));
         return c;
     }
+
+    public IEnumerable<Member> GetExpiringSoonMembers() =>
+        Members.Where(m =>
+            string.Equals(m.Status, "Expiring Soon", StringComparison.OrdinalIgnoreCase));
 }

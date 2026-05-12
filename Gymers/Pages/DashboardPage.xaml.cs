@@ -15,6 +15,7 @@ public partial class DashboardPage : ContentPage
         _data = data;
         InitializeComponent();
         ApplyRole();
+        ApplyExpirySoonBanner();
         ApplyCoachSpotlight();
         ProfileButton.Clicked += async (_, _) =>
             await Shell.Current.GoToAsync("//Trainers");
@@ -33,6 +34,25 @@ public partial class DashboardPage : ContentPage
         RoleBadge.Text               = $"Signed in as {session.RoleLabel}";
         MonthlyEarningsKpi.IsVisible = session.IsAdmin;
     }
+
+    void ApplyExpirySoonBanner()
+    {
+        var expiring = _data.GetExpiringSoonMembers().ToList();
+        if (expiring.Count == 0)
+        {
+            ExpirySoonBanner.IsVisible = false;
+            return;
+        }
+
+        ExpirySoonBanner.IsVisible = true;
+        ExpirySoonTitle.Text = expiring.Count == 1
+            ? "1 membership expiring soon"
+            : $"{expiring.Count} memberships expiring soon";
+        ExpirySoonBody.Text = "Tap to review: " + string.Join(", ", expiring.Select(m => m.Name));
+    }
+
+    async void OnExpirySoonTapped(object? sender, TappedEventArgs e) =>
+        await Shell.Current.GoToAsync("//Members");
 
     void ApplyCoachSpotlight()
     {

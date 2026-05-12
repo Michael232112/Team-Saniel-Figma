@@ -23,6 +23,30 @@
         <ScrollView Grid.Row="1" Padding="24,16,24,16">
             <VerticalStackLayout Spacing="16">
 
+                <Border x:Name="ExpirySoonBanner"
+                        IsVisible="False"
+                        BackgroundColor="#FFF4D5"
+                        StrokeThickness="0"
+                        Padding="16">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="4">
+                        <Label x:Name="ExpirySoonTitle"
+                               FontFamily="{StaticResource FontManropeBold}"
+                               FontSize="16"
+                               TextColor="{StaticResource NavyHeading}"
+                               Text="" />
+                        <Label x:Name="ExpirySoonBody"
+                               Style="{StaticResource BodyMd}"
+                               TextColor="{StaticResource NavyDeep}"
+                               Text="" />
+                    </VerticalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnExpirySoonTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
                 <c:KpiCard Variant="Light"
                            Label="Total Members" Value="1,250"
                            DeltaText="+5%" DeltaDirection="Up"
