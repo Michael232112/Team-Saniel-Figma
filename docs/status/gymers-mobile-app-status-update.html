@@ -94,7 +94,7 @@
   <p class="meta">Team Fafa | Gym Management System | Status date: May 12, 2026</p>
 
   <div class="summary">
-    <p><strong>Overall Status:</strong> The Gymers project is a working .NET MAUI iOS app with a Mac Catalyst secondary target for fast local verification. Six core tab screens (Login, Dashboard, Members, Payments, Attendance, Reports) plus three route-only screens (Trainers, Workouts, Equipment) are implemented and persist their state in a SQLite-backed <code>DataStore</code>. Tapping any row in Recent Payments generates a one-page PDF receipt via UIKit's native PDF renderer; the Reports tab generates Revenue, Attendance, and Member Roster reports as multi-page PDF or CSV, all via the system share sheet. The build succeeds with 0 warnings and 0 errors on both iOS and Mac Catalyst. Every README scope item is now implemented; remaining work is broader test coverage and visual polish.</p>
+    <p><strong>Overall Status:</strong> The Gymers project is a working .NET MAUI iOS app with a Mac Catalyst secondary target for fast local verification. Six core tab screens (Login, Dashboard, Members, Payments, Attendance, Reports) plus three route-only screens (Trainers, Workouts, Equipment) are implemented and persist their state in a SQLite-backed <code>DataStore</code>. Tapping any row in Recent Payments generates a one-page PDF receipt via UIKit's native PDF renderer; the Reports tab generates Revenue, Attendance, and Member Roster reports as multi-page PDF or CSV via the system share sheet. Role-based access control persists the Admin/Staff role from login through navigation, reflowing the bottom tab bar and hiding admin-only Dashboard analytics for Staff. Attendance offers a simulated QR/ID scan check-in alongside name search, and the Dashboard surfaces expiring-membership alerts. The build succeeds with 0 warnings and 0 errors on both iOS and Mac Catalyst. Every README scope item is now implemented; remaining work is broader test coverage and visual polish.</p>
   </div>
 
   <h2>Completed Features</h2>
@@ -168,6 +168,21 @@
       <td>Equipment management</td>
       <td class="status-done">Completed</td>
       <td>A SQLite-backed Equipment screen lists the gym's equipment roster with a live name-search filter and an <strong>Operational</strong> KPI card; each row shows category, status, and floor location. The Dashboard's new <strong>Equipment Status</strong> card surfaces operational-vs-maintenance counts (5 of 6 operational with one item under maintenance in the seed) and its <em>VIEW EQUIPMENT</em> button navigates to the Equipment screen via <code>//Equipment</code>.</td>
+    </tr>
+    <tr>
+      <td>Role-based access control</td>
+      <td class="status-done">Completed</td>
+      <td>Login now persists the selected role through a <code>Session</code> singleton (<code>Services/Session.cs</code>), exposed both via a static <code>Current</code> accessor and as a DI singleton. The bottom tab bar reflows from five tabs (Admin) to four (Staff) by hiding <em>Reports</em> and rebuilding the grid's column definitions at construction time. The Dashboard suppresses the <strong>Monthly Earnings</strong> KPI for Staff and displays a <em>"Signed in as Admin"</em> / <em>"Signed in as Staff"</em> badge under the top app bar. <strong>Payments</strong> remains visible to Staff per the README's scope (walk-in payments, renewals, receipts).</td>
+    </tr>
+    <tr>
+      <td>Member ID scan check-in</td>
+      <td class="status-done">Completed</td>
+      <td>Attendance now exposes a <strong>SCAN MEMBER ID</strong> primary path alongside the existing name search. Tapping it opens a fullscreen viewfinder overlay (240px bordered box, <em>"SCANNING..."</em> state); a 1.2-second timer resolves to the next member who hasn't yet checked in today (wrapping to the first member if all are already in) and reveals a detected-member card with name, tier, and ID. <em>CONFIRM CHECK-IN</em> flows through the existing <code>RecordCheckInAsync</code> so the new <code>CheckIn</code> appears at the top of Recent Check-ins; <em>CANCEL</em> dismisses without recording. Simulates the README's <em>"QR code or ID scanning"</em> attendance path on hardware where a real camera pipeline is out of scope.</td>
+    </tr>
+    <tr>
+      <td>Membership expiry alerts</td>
+      <td class="status-done">Completed</td>
+      <td>The Dashboard now prepends a tappable yellow alert banner listing members whose <code>Status</code> is <em>"Expiring Soon"</em> (Sam Chen in the seed). The banner shows the count and the comma-joined member names; tap navigates to the Members screen for follow-up. It stays hidden when no memberships are expiring, surfacing only when action is required. Visible to both Admin and Staff per the README's <em>Membership Status Viewing</em> scope.</td>
     </tr>
   </table>
 
@@ -245,6 +260,18 @@
   <div class="shot">
     <img src="screenshots/v2-login-error.png" alt="Login error state">
     <div class="caption">Login screen with the inline validation error visible after pressing Sign In with empty or wrong credentials.</div>
+  </div>
+
+  <h3>Screenshot 11: Staff Dashboard</h3>
+  <div class="shot">
+    <img src="screenshots/10-staff-dashboard.png" alt="Staff dashboard">
+    <div class="caption">Dashboard signed in as Staff: 4-pill bottom tab bar with Reports hidden, <em>"Signed in as Staff"</em> badge under the top app bar, no Monthly Earnings KPI, and the yellow expiring-soon banner visible at the top of the scroll.</div>
+  </div>
+
+  <h3>Screenshot 12: Member ID Scan Overlay</h3>
+  <div class="shot">
+    <img src="screenshots/11-scan-overlay.png" alt="Member ID scan overlay">
+    <div class="caption">Attendance screen with the <em>SCAN MEMBER ID</em> overlay in its captured state: viewfinder mock with <em>"CAPTURED"</em> text and the detected-member card showing the member name, tier, and ID with the <em>CONFIRM CHECK-IN</em> button.</div>
   </div>
 
   <h2>Build Verification</h2>
