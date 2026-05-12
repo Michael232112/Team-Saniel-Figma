@@ -66,7 +66,10 @@ public sealed class DataStore
             : Trainers.Where(t =>
                 t.Name.Contains(query.Trim(), StringComparison.OrdinalIgnoreCase));
 
-    public Trainer? TopTrainer() => Trainers.FirstOrDefault();
+    public Trainer? TopTrainer() =>
+        Trainers.OrderByDescending(t => t.Rating)
+                .ThenByDescending(t => t.SessionsCompleted)
+                .FirstOrDefault();
 
     public IEnumerable<WorkoutPlan> SearchWorkoutPlans(string? query) =>
         string.IsNullOrWhiteSpace(query)
@@ -95,7 +98,7 @@ public sealed class DataStore
     {
         var member = new Member(NextId(Members.Select(m => m.Id), "m"), name.Trim(), tier, status, expires);
         await _db.InsertMemberAsync(member);
-        await MainThread.InvokeOnMainThreadAsync(() => Members.Add(member));
+        await MainThread.InvokeOnMainThreadAsync(() => Members.Insert(0, member));
         return member;
     }
 
@@ -115,7 +118,7 @@ public sealed class DataStore
     {
         var trainer = new Trainer(NextId(Trainers.Select(t => t.Id), "t"), name.Trim(), title.Trim(), rating, sessionsCompleted);
         await _db.InsertTrainerAsync(trainer);
-        await MainThread.InvokeOnMainThreadAsync(() => Trainers.Add(trainer));
+        await MainThread.InvokeOnMainThreadAsync(() => Trainers.Insert(0, trainer));
         return trainer;
     }
 
@@ -139,7 +142,7 @@ public sealed class DataStore
         int durationWeeks,
         string summary)
     {
-        int orderRank = WorkoutPlans.Count == 0 ? 1 : WorkoutPlans.Max(p => p.OrderRank) + 1;
+        int orderRank = WorkoutPlans.Count == 0 ? 1 : WorkoutPlans.Min(p => p.OrderRank) - 1;
         var plan = new WorkoutPlan(
             NextId(WorkoutPlans.Select(p => p.Id), "p"),
             name.Trim(),
@@ -151,7 +154,7 @@ public sealed class DataStore
             orderRank);
 
         await _db.InsertWorkoutPlanAsync(plan);
-        await MainThread.InvokeOnMainThreadAsync(() => WorkoutPlans.Add(plan));
+        await MainThread.InvokeOnMainThreadAsync(() => WorkoutPlans.Insert(0, plan));
         return plan;
     }
 
@@ -169,7 +172,7 @@ public sealed class DataStore
 
     public async Task<Equipment> AddEquipmentAsync(string name, string category, string status, string location)
     {
-        int orderRank = Equipment.Count == 0 ? 1 : Equipment.Max(e => e.OrderRank) + 1;
+        int orderRank = Equipment.Count == 0 ? 1 : Equipment.Min(e => e.OrderRank) - 1;
         var item = new Equipment(
             NextId(Equipment.Select(e => e.Id), "e"),
             name.Trim(),
@@ -179,7 +182,7 @@ public sealed class DataStore
             orderRank);
 
         await _db.InsertEquipmentAsync(item);
-        await MainThread.InvokeOnMainThreadAsync(() => Equipment.Add(item));
+        await MainThread.InvokeOnMainThreadAsync(() => Equipment.Insert(0, item));
         return item;
     }
 

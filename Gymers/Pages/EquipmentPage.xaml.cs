@@ -188,11 +188,12 @@ public partial class EquipmentPage : ContentPage
 
         FormOverlay.Children.Add(new Border
         {
-            Padding = 18,
+            Padding = 20,
             BackgroundColor = Colors.White,
             StrokeThickness = 0,
             StrokeShape = new RoundRectangle { CornerRadius = 8 },
             VerticalOptions = LayoutOptions.Center,
+            MaximumWidthRequest = 520,
             Content = stack
         });
         FormOverlay.IsVisible = true;
