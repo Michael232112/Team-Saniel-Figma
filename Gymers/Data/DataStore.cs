@@ -13,6 +13,7 @@ public sealed class DataStore
     public ObservableCollection<CheckIn>     CheckIns     { get; }
     public ObservableCollection<Trainer>     Trainers     { get; }
     public ObservableCollection<WorkoutPlan> WorkoutPlans { get; }
+    public ObservableCollection<Equipment>   Equipment    { get; }
 
     public DataStore()
     {
@@ -36,11 +37,17 @@ public sealed class DataStore
             _db.SeedWorkoutPlans(SampleData.WorkoutPlans);
         }
 
+        if (_db.IsEquipmentEmpty())
+        {
+            _db.SeedEquipment(SampleData.Equipment);
+        }
+
         Members      = new ObservableCollection<Member>(_db.GetMembers());
         Payments     = new ObservableCollection<Payment>(_db.GetPaymentsNewestFirst());
         CheckIns     = new ObservableCollection<CheckIn>(_db.GetCheckInsNewestFirst());
         Trainers     = new ObservableCollection<Trainer>(_db.GetTrainersByRatingDesc());
         WorkoutPlans = new ObservableCollection<WorkoutPlan>(_db.GetWorkoutPlansOrdered());
+        Equipment    = new ObservableCollection<Equipment>(_db.GetEquipmentOrdered());
     }
 
     public Member? FindMemberByName(string? name) =>
@@ -71,6 +78,18 @@ public sealed class DataStore
 
     public string TrainerName(string trainerId) =>
         Trainers.FirstOrDefault(t => t.Id == trainerId)?.Name ?? "—";
+
+    public IEnumerable<Equipment> SearchEquipment(string? query) =>
+        string.IsNullOrWhiteSpace(query)
+            ? Equipment
+            : Equipment.Where(e =>
+                e.Name.Contains(query.Trim(), StringComparison.OrdinalIgnoreCase));
+
+    public int OperationalEquipmentCount() =>
+        Equipment.Count(e => string.Equals(e.Status, "Operational", StringComparison.OrdinalIgnoreCase));
+
+    public int MaintenanceEquipmentCount() =>
+        Equipment.Count - OperationalEquipmentCount();
 
     public async Task<Payment> RecordPaymentAsync(Member m, decimal amount, string method)
     {
