@@ -20,6 +20,7 @@ public sealed class GymersDb
         _sync.CreateTable<CheckInRow>();
         _sync.CreateTable<TrainerRow>();
         _sync.CreateTable<WorkoutPlanRow>();
+        _sync.CreateTable<EquipmentRow>();
     }
 
     public SQLiteAsyncConnection Async => _async ??= new SQLiteAsyncConnection(_path);
@@ -82,6 +83,20 @@ public sealed class GymersDb
 
     public IEnumerable<WorkoutPlan> GetWorkoutPlansOrdered() =>
         _sync.Table<WorkoutPlanRow>()
+             .OrderBy(r => r.OrderRank)
+             .ToList()
+             .Select(ToRecord);
+
+    public bool IsEquipmentEmpty() =>
+        _sync.Table<EquipmentRow>().Count() == 0;
+
+    public void SeedEquipment(IEnumerable<Equipment> items)
+    {
+        foreach (var e in items) _sync.Insert(ToRow(e));
+    }
+
+    public IEnumerable<Equipment> GetEquipmentOrdered() =>
+        _sync.Table<EquipmentRow>()
              .OrderBy(r => r.OrderRank)
              .ToList()
              .Select(ToRecord);
@@ -161,4 +176,17 @@ public sealed class GymersDb
     static WorkoutPlan ToRecord(WorkoutPlanRow r) => new(
         r.Id, r.Name, r.TrainerId, r.Level,
         r.SessionsPerWeek, r.DurationWeeks, r.Summary, r.OrderRank);
+
+    static EquipmentRow ToRow(Equipment e) => new()
+    {
+        Id        = e.Id,
+        Name      = e.Name,
+        Category  = e.Category,
+        Status    = e.Status,
+        Location  = e.Location,
+        OrderRank = e.OrderRank
+    };
+
+    static Equipment ToRecord(EquipmentRow r) => new(
+        r.Id, r.Name, r.Category, r.Status, r.Location, r.OrderRank);
 }
