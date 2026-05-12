@@ -66,6 +66,16 @@ public static class SampleData
             "Low-intensity flow + mobility for deload weeks.",                     5),
     };
 
+    public static readonly IReadOnlyList<Equipment> Equipment = new[]
+    {
+        new Equipment("e1", "Treadmill TR-01",     "Cardio",   "Operational", "Cardio Zone",  1),
+        new Equipment("e2", "Treadmill TR-02",     "Cardio",   "Operational", "Cardio Zone",  2),
+        new Equipment("e3", "Power Rack PR-A",     "Strength", "Operational", "Weight Room",  3),
+        new Equipment("e4", "Smith Machine SM-01", "Strength", "Maintenance", "Weight Room",  4),
+        new Equipment("e5", "Spin Bike SB-03",     "Cardio",   "Operational", "Cardio Zone",  5),
+        new Equipment("e6", "Yoga Mat Set YM-01",  "Studio",   "Operational", "Yoga Studio",  6),
+    };
+
     public static Member GetMember(string id) =>
         Members.First(m => m.Id == id);
 }
