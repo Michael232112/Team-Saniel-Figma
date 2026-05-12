@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Globalization;
 using Gymers.Controls;
 using Gymers.Data;
 using Gymers.Models;
@@ -15,7 +16,7 @@ public partial class MembersPage : ContentPage
     Entry? _nameEntry;
     Picker? _tierPicker;
     Picker? _statusPicker;
-    DatePicker? _expiryPicker;
+    Entry? _expiryEntry;
     Label? _formError;
 
     public MembersPage(DataStore data)
@@ -90,15 +91,14 @@ public partial class MembersPage : ContentPage
     {
         _editingMember = member;
         var expiryDate = (member?.Expires ?? DateOnly.FromDateTime(DateTime.Today.AddMonths(1))).ToDateTime(TimeOnly.MinValue);
-        var minimumDate = member is null || expiryDate >= DateTime.Today ? DateTime.Today : expiryDate;
         _nameEntry = new Entry { Text = member?.Name ?? "", Placeholder = "Member name" };
         _tierPicker = Picker("Tier", Enum.GetNames<MembershipTier>());
         _statusPicker = Picker("Status", new[] { "Active", "Expiring Soon", "Inactive" });
-        _expiryPicker = new DatePicker
+        _expiryEntry = new Entry
         {
-            MinimumDate = minimumDate,
-            Date = expiryDate,
-            Format = "MMM dd, yyyy"
+            Text = expiryDate.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture),
+            Placeholder = "MM/DD/YYYY",
+            Keyboard = Keyboard.Numeric
         };
         _formError = ErrorLabel();
 
@@ -111,7 +111,7 @@ public partial class MembersPage : ContentPage
             Label("Name"), _nameEntry,
             Label("Tier"), _tierPicker,
             Label("Status"), _statusPicker,
-            Label("Expires"), _expiryPicker,
+            Label("Expires (MM/DD/YYYY)"), _expiryEntry,
             _formError
         }, SaveMemberAsync);
     }
@@ -133,7 +133,17 @@ public partial class MembersPage : ContentPage
         }
 
         string status = _statusPicker?.SelectedItem as string ?? "Active";
-        var expires = DateOnly.FromDateTime(_expiryPicker?.Date ?? DateTime.Today);
+        if (!TryReadExpiry(out DateOnly expires))
+        {
+            ShowFormError("Use a valid expiry date like 06/12/2026.");
+            return;
+        }
+
+        if (_editingMember is null && expires < DateOnly.FromDateTime(DateTime.Today))
+        {
+            ShowFormError("New member expiry must be today or later.");
+            return;
+        }
 
         try
         {
@@ -199,6 +209,13 @@ public partial class MembersPage : ContentPage
         if (_formError is null) return;
         _formError.Text = message;
         _formError.IsVisible = true;
+    }
+
+    bool TryReadExpiry(out DateOnly expires)
+    {
+        string text = _expiryEntry?.Text?.Trim() ?? "";
+        string[] formats = { "M/d/yyyy", "MM/dd/yyyy", "yyyy-MM-dd" };
+        return DateOnly.TryParseExact(text, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out expires);
     }
 
     static Picker Picker(string title, IEnumerable<string> values)

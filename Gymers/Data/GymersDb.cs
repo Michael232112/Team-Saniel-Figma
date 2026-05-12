@@ -43,8 +43,13 @@ public sealed class GymersDb
         foreach (var c in checkIns) _sync.Insert(ToRow(c));
     }
 
-    public IEnumerable<Member> GetMembers() =>
-        _sync.Table<MemberRow>().ToList().Select(ToRecord);
+    public IEnumerable<Member> GetMembersNewestFirst() =>
+        _sync.Table<MemberRow>()
+             .ToList()
+             .OrderByDescending(r => IdNumber(r.Id, "m") > SeedMemberCount)
+             .ThenByDescending(r => IdNumber(r.Id, "m") > SeedMemberCount ? IdNumber(r.Id, "m") : -1)
+             .ThenBy(r => IdNumber(r.Id, "m"))
+             .Select(ToRecord);
 
     public IEnumerable<Payment> GetPaymentsNewestFirst() =>
         _sync.Table<PaymentRow>()
@@ -66,11 +71,12 @@ public sealed class GymersDb
         foreach (var t in trainers) _sync.Insert(ToRow(t));
     }
 
-    public IEnumerable<Trainer> GetTrainersByRatingDesc() =>
+    public IEnumerable<Trainer> GetTrainersNewestFirst() =>
         _sync.Table<TrainerRow>()
              .ToList()
-             .OrderByDescending(r => decimal.Parse(r.RatingText, CultureInfo.InvariantCulture))
-             .ThenByDescending(r => r.SessionsCompleted)
+             .OrderByDescending(r => IdNumber(r.Id, "t") > SeedTrainerCount)
+             .ThenByDescending(r => IdNumber(r.Id, "t") > SeedTrainerCount ? IdNumber(r.Id, "t") : -1)
+             .ThenBy(r => IdNumber(r.Id, "t"))
              .Select(ToRecord);
 
     public bool IsWorkoutPlansEmpty() =>
@@ -119,6 +125,15 @@ public sealed class GymersDb
     public Task InsertEquipmentAsync(Equipment e) => Async.InsertAsync(ToRow(e));
     public Task UpdateEquipmentAsync(Equipment e) => Async.UpdateAsync(ToRow(e));
     public Task DeleteEquipmentAsync(Equipment e) => Async.DeleteAsync(ToRow(e));
+
+    const int SeedMemberCount = 6;
+    const int SeedTrainerCount = 5;
+
+    static int IdNumber(string id, string prefix) =>
+        id.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) &&
+        int.TryParse(id[prefix.Length..], out int n)
+            ? n
+            : 0;
 
     static MemberRow ToRow(Member m) => new()
     {

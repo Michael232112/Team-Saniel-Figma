@@ -42,10 +42,10 @@ public sealed class DataStore
             _db.SeedEquipment(SampleData.Equipment);
         }
 
-        Members      = new ObservableCollection<Member>(_db.GetMembers());
+        Members      = new ObservableCollection<Member>(_db.GetMembersNewestFirst());
         Payments     = new ObservableCollection<Payment>(_db.GetPaymentsNewestFirst());
         CheckIns     = new ObservableCollection<CheckIn>(_db.GetCheckInsNewestFirst());
-        Trainers     = new ObservableCollection<Trainer>(_db.GetTrainersByRatingDesc());
+        Trainers     = new ObservableCollection<Trainer>(_db.GetTrainersNewestFirst());
         WorkoutPlans = new ObservableCollection<WorkoutPlan>(_db.GetWorkoutPlansOrdered());
         Equipment    = new ObservableCollection<Equipment>(_db.GetEquipmentOrdered());
     }
