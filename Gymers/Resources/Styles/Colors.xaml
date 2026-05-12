@@ -30,6 +30,7 @@
 
     <!-- Status -->
     <Color x:Key="Danger">#B91C1C</Color>
+    <Color x:Key="WarningPale">#FFF4D5</Color>
 
     <!-- Brushes for the few places that need them -->
     <SolidColorBrush x:Key="BgAppBrush" Color="{StaticResource BgApp}" />

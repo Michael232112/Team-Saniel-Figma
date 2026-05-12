@@ -183,7 +183,14 @@ public partial class AttendancePage : ContentPage
 
         _scanCandidate =
             _data.Members.FirstOrDefault(m => !checkedInIds.Contains(m.Id))
-            ?? _data.Members.First();
+            ?? _data.Members.FirstOrDefault();
+
+        if (_scanCandidate is null)
+        {
+            CloseScanOverlay();
+            ShowError("No members to scan.");
+            return;
+        }
 
         ScanResultName.Text = _scanCandidate.Name;
         ScanResultMeta.Text = $"{_scanCandidate.Tier} · ID {_scanCandidate.Id}";

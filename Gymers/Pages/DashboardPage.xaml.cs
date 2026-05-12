@@ -16,6 +16,7 @@ public partial class DashboardPage : ContentPage
         InitializeComponent();
         ApplyRole();
         ApplyExpirySoonBanner();
+        _data.Members.CollectionChanged += (_, _) => ApplyExpirySoonBanner();
         ApplyCoachSpotlight();
         ProfileButton.Clicked += async (_, _) =>
             await Shell.Current.GoToAsync("//Trainers");

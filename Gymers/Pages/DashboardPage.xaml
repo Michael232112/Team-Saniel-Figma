@@ -25,7 +25,7 @@
 
                 <Border x:Name="ExpirySoonBanner"
                         IsVisible="False"
-                        BackgroundColor="#FFF4D5"
+                        BackgroundColor="{StaticResource WarningPale}"
                         StrokeThickness="0"
                         Padding="16">
                     <Border.StrokeShape>

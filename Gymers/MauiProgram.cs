@@ -26,7 +26,6 @@ public static class MauiProgram
 		builder.Services.AddSingleton<DataStore>();
 		builder.Services.AddSingleton<ReceiptService>();
 		builder.Services.AddSingleton<ReportService>();
-		builder.Services.AddSingleton<Session>(_ => Session.Current);
 
 		builder.Services.AddTransient<Pages.LoginPage>();
 		builder.Services.AddTransient<Pages.DashboardPage>();
