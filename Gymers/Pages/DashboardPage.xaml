@@ -173,6 +173,45 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Equipment Status -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Style="{StaticResource H2Section}" Text="Equipment Status" />
+
+                        <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label x:Name="EquipmentHeadline"
+                                       Style="{StaticResource H3Card}"
+                                       Text="—" />
+                                <Label Style="{StaticResource BodyMd}"
+                                       TextColor="{StaticResource TextMuted}"
+                                       Text="Operational" />
+                            </VerticalStackLayout>
+                            <Label x:Name="EquipmentTotalLabel"
+                                   Grid.Column="1"
+                                   FontFamily="{StaticResource FontInterSemiBold}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource NavyDeep}"
+                                   VerticalTextAlignment="Center"
+                                   Text="" />
+                        </Grid>
+
+                        <Label x:Name="EquipmentMaintenanceMeta"
+                               FontFamily="{StaticResource FontInterSemiBold}"
+                               FontSize="14"
+                               TextColor="{StaticResource NavyDeep}"
+                               Text="" />
+
+                        <Label x:Name="EquipmentSummary"
+                               Style="{StaticResource BodyMd}"
+                               TextColor="{StaticResource TextMuted}"
+                               Text="Active fleet across cardio, strength, and studio zones." />
+
+                        <c:PrimaryButton x:Name="BrowseEquipmentButton"
+                                         Text="VIEW EQUIPMENT" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Today's Classes -->
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="32">

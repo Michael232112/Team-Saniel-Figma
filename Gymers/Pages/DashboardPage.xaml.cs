@@ -19,6 +19,9 @@ public partial class DashboardPage : ContentPage
         ApplyFeaturedPlan();
         BrowsePlansButton.Clicked += async (_, _) =>
             await Shell.Current.GoToAsync("//Workouts");
+        ApplyEquipmentStatus();
+        BrowseEquipmentButton.Clicked += async (_, _) =>
+            await Shell.Current.GoToAsync("//Equipment");
         BuildClassList();
     }
 
@@ -55,6 +58,29 @@ public partial class DashboardPage : ContentPage
         FeaturedPlanTrainer.Text = _data.TrainerName(top.TrainerId);
         FeaturedPlanMeta.Text    = $"{top.Level}  ·  {top.SessionsPerWeek}×/wk  ·  {top.DurationWeeks} wk";
         FeaturedPlanSummary.Text = top.Summary;
+    }
+
+    void ApplyEquipmentStatus()
+    {
+        int total       = _data.Equipment.Count;
+        int operational = _data.OperationalEquipmentCount();
+        int maintenance = _data.MaintenanceEquipmentCount();
+
+        if (total == 0)
+        {
+            EquipmentHeadline.Text             = "No equipment configured.";
+            EquipmentTotalLabel.IsVisible      = false;
+            EquipmentMaintenanceMeta.IsVisible = false;
+            EquipmentSummary.IsVisible         = false;
+            BrowseEquipmentButton.IsVisible    = false;
+            return;
+        }
+
+        EquipmentHeadline.Text        = $"{operational} / {total}";
+        EquipmentTotalLabel.Text      = $"{total} item{(total == 1 ? "" : "s")}";
+        EquipmentMaintenanceMeta.Text = maintenance == 1
+            ? "1 under maintenance"
+            : $"{maintenance} under maintenance";
     }
 
     static string InitialsFor(string name)
