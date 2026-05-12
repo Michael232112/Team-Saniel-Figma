@@ -22,6 +22,11 @@
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="16">
                         <Label Style="{StaticResource H3Card}" Text="Check In" />
+                        <c:PrimaryButton x:Name="ScanButton" Text="SCAN MEMBER ID" />
+                        <Label Style="{StaticResource BodySm}"
+                               TextColor="{StaticResource TextMuted}"
+                               HorizontalTextAlignment="Center"
+                               Text="or search by name" />
                         <c:SearchField x:Name="MemberSearch" Placeholder="Search member by name…" />
                         <VerticalStackLayout x:Name="Suggestions" Spacing="4" IsVisible="False" />
                         <c:PrimaryButton x:Name="CheckInButton" Text="CHECK IN" />
@@ -39,5 +44,60 @@
         </ScrollView>
 
         <c:BottomTabBar Grid.Row="2" ActiveTab="Attendance" />
+
+        <Border x:Name="ScanOverlay"
+                Grid.Row="0" Grid.RowSpan="3"
+                BackgroundColor="#E60F1A2A"
+                IsVisible="False"
+                StrokeThickness="0">
+            <ScrollView>
+                <VerticalStackLayout VerticalOptions="Center" Padding="32" Spacing="24">
+
+                    <Label Text="Scanner"
+                           FontFamily="{StaticResource FontInterSemiBold}"
+                           FontSize="12"
+                           CharacterSpacing="3"
+                           TextColor="White"
+                           HorizontalTextAlignment="Center" />
+
+                    <Border WidthRequest="240" HeightRequest="240"
+                            HorizontalOptions="Center"
+                            BackgroundColor="Transparent"
+                            Stroke="White"
+                            StrokeThickness="3">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="24" />
+                        </Border.StrokeShape>
+                        <Label x:Name="ScanState"
+                               Text="SCANNING…"
+                               FontFamily="{StaticResource FontManropeBold}"
+                               FontSize="20"
+                               TextColor="White"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center" />
+                    </Border>
+
+                    <Border x:Name="ScanResultCard"
+                            Style="{StaticResource Card}"
+                            IsVisible="False">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Style="{StaticResource BodySm}"
+                                   TextColor="{StaticResource TextMuted}"
+                                   Text="Detected member" />
+                            <Label x:Name="ScanResultName"
+                                   Style="{StaticResource H3Card}"
+                                   Text="—" />
+                            <Label x:Name="ScanResultMeta"
+                                   Style="{StaticResource BodyMd}"
+                                   TextColor="{StaticResource TextMuted}"
+                                   Text="" />
+                            <c:PrimaryButton x:Name="ScanConfirmButton" Text="CONFIRM CHECK-IN" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <c:SecondaryButton x:Name="ScanCancelButton" Text="CANCEL" />
+                </VerticalStackLayout>
+            </ScrollView>
+        </Border>
     </Grid>
 </ContentPage>

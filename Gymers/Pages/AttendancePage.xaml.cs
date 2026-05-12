@@ -10,7 +10,9 @@ public partial class AttendancePage : ContentPage
 {
     readonly DataStore _data;
     Member? _selected;
+    Member? _scanCandidate;
     IDispatcherTimer? _statusTimer;
+    IDispatcherTimer? _scanTimer;
 
     public AttendancePage(DataStore data)
     {
@@ -18,6 +20,9 @@ public partial class AttendancePage : ContentPage
         InitializeComponent();
         MemberSearch.PropertyChanged += OnSearchChanged;
         CheckInButton.Clicked += OnCheckIn;
+        ScanButton.Clicked += OnScanTapped;
+        ScanConfirmButton.Clicked += OnScanConfirmed;
+        ScanCancelButton.Clicked += (_, _) => CloseScanOverlay();
         _data.CheckIns.CollectionChanged += (_, _) => Render();
         Render();
     }
@@ -151,5 +156,55 @@ public partial class AttendancePage : ContentPage
         _statusTimer.IsRepeating = false;
         _statusTimer.Tick += (_, _) => StatusLabel.IsVisible = false;
         _statusTimer.Start();
+    }
+
+    void OnScanTapped(object? sender, EventArgs e)
+    {
+        if (_data.Members.Count == 0) { ShowError("No members to scan."); return; }
+
+        ScanResultCard.IsVisible = false;
+        ScanState.Text = "SCANNING…";
+        ScanOverlay.IsVisible = true;
+
+        _scanTimer?.Stop();
+        _scanTimer = Dispatcher.CreateTimer();
+        _scanTimer.Interval = TimeSpan.FromSeconds(1.2);
+        _scanTimer.IsRepeating = false;
+        _scanTimer.Tick += (_, _) => ResolveScan();
+        _scanTimer.Start();
+    }
+
+    void ResolveScan()
+    {
+        var checkedInIds = _data.CheckIns
+            .Where(c => c.At.Date == DateTime.Now.Date)
+            .Select(c => c.MemberId)
+            .ToHashSet();
+
+        _scanCandidate =
+            _data.Members.FirstOrDefault(m => !checkedInIds.Contains(m.Id))
+            ?? _data.Members.First();
+
+        ScanResultName.Text = _scanCandidate.Name;
+        ScanResultMeta.Text = $"{_scanCandidate.Tier} · ID {_scanCandidate.Id}";
+        ScanState.Text = "CAPTURED";
+        ScanResultCard.IsVisible = true;
+    }
+
+    async void OnScanConfirmed(object? sender, EventArgs e)
+    {
+        if (_scanCandidate is null) return;
+        var m = _scanCandidate;
+        var c = await _data.RecordCheckInAsync(m);
+        CloseScanOverlay();
+        ShowSuccess($"Scanned & checked in {m.Name} at {c.At:hh\\:mm tt}.");
+    }
+
+    void CloseScanOverlay()
+    {
+        _scanTimer?.Stop();
+        ScanOverlay.IsVisible = false;
+        ScanResultCard.IsVisible = false;
+        _scanCandidate = null;
     }
 }
