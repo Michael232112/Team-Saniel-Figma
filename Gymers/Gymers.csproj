@@ -11,7 +11,7 @@
 		<Nullable>enable</Nullable>
 
 		<ApplicationTitle>Gymers</ApplicationTitle>
-		<ApplicationId>com.companyname.gymers</ApplicationId>
+		<ApplicationId>com.michaelgonzaga.gymers</ApplicationId>
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 

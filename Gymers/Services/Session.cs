@@ -13,4 +13,10 @@ public sealed class Session
         Username = username;
         IsAdmin  = isAdmin;
     }
+
+    public void SignOut()
+    {
+        Username = "";
+        IsAdmin  = true;
+    }
 }

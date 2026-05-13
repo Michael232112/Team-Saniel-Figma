@@ -29,19 +29,42 @@
                    BindingContext="{x:Reference ThisBar}"
                    Text="{Binding Title}" />
 
-            <!-- Trailing icon -->
-            <Border Grid.Column="2" WidthRequest="40" HeightRequest="40"
-                    BackgroundColor="Transparent" StrokeThickness="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="999" />
-                </Border.StrokeShape>
-                <Label x:Name="TrailingGlyph"
-                       FontFamily="{StaticResource FontLucide}"
-                       FontSize="18"
-                       TextColor="{StaticResource TextPrimary}"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center" />
-            </Border>
+            <!-- Trailing actions -->
+            <HorizontalStackLayout Grid.Column="2"
+                                   Spacing="12"
+                                   VerticalOptions="Center">
+                <Border WidthRequest="40" HeightRequest="40"
+                        BackgroundColor="Transparent" StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="999" />
+                    </Border.StrokeShape>
+                    <Label x:Name="TrailingGlyph"
+                           FontFamily="{StaticResource FontLucide}"
+                           FontSize="18"
+                           TextColor="{StaticResource TextPrimary}"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center" />
+                </Border>
+
+                <Border x:Name="LogoutButton"
+                        BackgroundColor="{StaticResource SurfaceMuted}"
+                        StrokeThickness="0"
+                        Padding="12,8"
+                        VerticalOptions="Center"
+                        IsVisible="{Binding ShowLogout, Source={x:Reference ThisBar}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Label Text="LOG OUT"
+                           FontFamily="{StaticResource FontInterSemiBold}"
+                           FontSize="12"
+                           TextColor="{StaticResource NavyDeep}"
+                           VerticalTextAlignment="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLogoutTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+            </HorizontalStackLayout>
         </Grid>
     </Border>
 </ContentView>

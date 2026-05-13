@@ -8,6 +8,9 @@ public partial class TopAppBar : ContentView
     public static readonly BindableProperty ShowAvatarProperty =
         BindableProperty.Create(nameof(ShowAvatar), typeof(bool), typeof(TopAppBar), true);
 
+    public static readonly BindableProperty ShowLogoutProperty =
+        BindableProperty.Create(nameof(ShowLogout), typeof(bool), typeof(TopAppBar), true);
+
     public static readonly BindableProperty TrailingIconGlyphProperty =
         BindableProperty.Create(nameof(TrailingIconGlyph), typeof(string), typeof(TopAppBar), string.Empty,
             propertyChanged: (b, _, n) => ((TopAppBar)b).TrailingGlyph.Text = (string)n);
@@ -24,6 +27,12 @@ public partial class TopAppBar : ContentView
         set => SetValue(ShowAvatarProperty, value);
     }
 
+    public bool ShowLogout
+    {
+        get => (bool)GetValue(ShowLogoutProperty);
+        set => SetValue(ShowLogoutProperty, value);
+    }
+
     public string TrailingIconGlyph
     {
         get => (string)GetValue(TrailingIconGlyphProperty);
@@ -31,4 +40,10 @@ public partial class TopAppBar : ContentView
     }
 
     public TopAppBar() => InitializeComponent();
+
+    async void OnLogoutTapped(object? sender, TappedEventArgs e)
+    {
+        Services.Session.Current.SignOut();
+        await Shell.Current.GoToAsync("//Login");
+    }
 }
